@@ -1,0 +1,135 @@
+<DetailBar>
+    MDFloatLayout:
+        padding: 5
+        size_hint_y: None
+        height: 20
+        #md_bg_color: rgba(169, 50, 38, 80)
+        pos_hint: {"center_x": .5, "top": 1}
+        MDLabel:
+            id: device_name2
+            text: 'Device Name'
+            font_name: "MPoppins"
+            font_size: 10
+            halign: "left"
+            adaptive_size:True
+            pos_hint: {"x": .04, "center_y": .5}
+            #md_bg_color: rgba(255, 170, 23, 255)
+        MDLabel:
+            id: serial_no2
+            text: 'Serial No.'
+            font_name: "MPoppins"
+            font_size: 10
+            halign: "center"
+            adaptive_size:True
+            pos_hint: {"x": .47, "center_y": .5}
+            #md_bg_color: rgba(255, 170, 23, 255)
+        MDLabel:
+            id: no_of_devices2
+            text: 'No.'
+            font_name: "MPoppins"
+            font_size: 10
+            halign: "center"
+            #adaptive_size:True
+            adaptive_size:True
+            pos_hint: {"x": .75, "center_y": .5}
+            #md_bg_color: rgba(255, 170, 23, 255)
+        MDLabel:
+            id: status
+            text: 'Status'
+            font_name: "MPoppins"
+            font_size: 10
+            halign: "center"
+            #adaptive_size:True
+            adaptive_size:True
+            pos_hint: {"right": .96, "center_y": .5}
+            #md_bg_color: rgba(255, 170, 23, 255)
+
+<ItemCard3>
+    padding: 5
+    size_hint_y: None
+    height: 20
+    #md_bg_color: rgba(169, 50, 38, 80)
+    MDLabel:
+        id: device_name2
+        text: 'P30 Fast Charger'
+        font_name: "MPoppins"
+        font_size: 10
+        halign: "left"
+        adaptive_size:True
+        pos_hint: {"x": .04, "center_y": .5}
+        #md_bg_color: rgba(255, 170, 23, 255)
+    MDLabel:
+        id: serial_no2
+        text: '761304500011'
+        font_name: "MPoppins"
+        font_size: 10
+        halign: "center"
+        adaptive_size:True
+        pos_hint: {"x": .47, "center_y": .5}
+        #md_bg_color: rgba(255, 170, 23, 255)
+    MDLabel:
+        id: no_of_devices2
+        text: 'x10'
+        font_name: "MPoppins"
+        font_size: 10
+        halign: "center"
+        #adaptive_size:True
+        adaptive_size:True
+        pos_hint: {"x": .75, "center_y": .5}
+        #md_bg_color: rgba(255, 170, 23, 255)
+    MDIcon:
+        id: status
+        source: 'ok2.png'
+        adaptive_size: True
+        font_size : dp(20)
+        pos_hint: {"right": .95, "center_y": .5}
+
+
+<AccountListItem>:
+    padding: 16, 0, 16, 0
+    spacing: 16
+    size_hint: 1, None
+    height: 56
+    radius: 5
+    #md_bg_color: rgba(249, 249, 249, 80)
+    on_release:
+        print(self.text)
+    MDBoxLayout:
+        padding: 0
+        size_hint: None, None
+        width: 40
+        height: 40
+        pos_hint: {"center_y": .5}
+        #md_bg_color: rgba(169, 50, 38, 80)
+        Image:
+            source: root.source
+            adaptive_size: True
+            #pos_hint: {"center_x": .12, "center_y": .5}
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDBoxLayout:
+            MDLabel:
+                text: root.text
+                font_name: "MPoppins"
+                font_size: 12
+                halign: "center"
+                adaptive_size:True
+                pos_hint: {"center_y": .5}
+                #md_bg_color: rgba(255, 170, 23, 255)
+            AnchorLayout:
+                anchor_x: 'right'
+                MDBoxLayout:
+                    padding: 0
+                    size_hint: None, None
+                    width: 40
+                    height: 40
+                    pos_hint: {"center_y": .5}
+                    #md_bg_color: rgba(38, 50, 169, 80)
+                    MDIcon:
+                        icon: root.icon
+                        halign: 'right'
+                        pos_hint: {"center_x": .5, "center_y": .5}
+        MDBoxLayout:
+            adaptive_height: True
+            pos_hint: {"center_x": .5, "center_y": 0}
+            MDSeparator:

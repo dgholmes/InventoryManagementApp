@@ -1,0 +1,4655 @@
+#: import NoTransition kivy.uix.screenmanager.NoTransition
+
+ScreenManager:
+    MainScreen:
+
+    ScanScreen:
+    ScanScreenNew:
+    SingleScanScreen:
+
+    AddProductScreen:
+    AddProductScreenOld:
+    ProductDetailScreen:
+    ProductSummaryScreen:
+
+    LendScreen:
+    RentalsScreen:
+    RentDetailsScreen:
+    NewRentalScreen:
+
+    CustomerScreen:
+    AddCustomerScreen:
+
+    USIMScreen:
+    AddUSIMScreen:
+    USIMDetailScreen:
+
+
+# New Rental Screen
+<NewRentalScreen>:
+    name: 'new_rental'
+    on_enter: root.date_today()
+    MDFloatLayout:
+        padding: 16
+        orientation: 'vertical'
+        #md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"top": 1}
+            on_release:
+                root.manager.transition.direction = "left"
+                root.manager.current = "main"
+        MDLabel:
+            size_hint: 1, None
+            height: 50
+            pos_hint: {"center_x": .5, "top": 1}
+            #text: "N e w  R e n t a l"
+            text: "새 대여"
+            halign: "center"
+            #font_name: "LPoppins"
+            font_name: 'RNanum'
+            font_size: 20
+        MDGridLayout:
+            rows: 6
+            padding: 16
+            spacing: 25
+            adaptive_height: True
+            pos_hint: {"center_x": .5,"top": .9}
+
+            # Select Date
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: .9, None
+                adaptive_height: True
+                #md_bg_color: rgba(106, 206, 209, 20)
+                spacing: 5
+                MDLabel:
+                    #text: 'Select Date'
+                    #font_name: "MPoppins"
+                    text: '날짜 선택'
+                    font_name: 'BNanum'
+                    font_size: 12
+                    adaptive_height: True
+                    #theme_text_color: "Custom"
+                    #text_color: 0, 0, 0, .6
+                    color: rgba(0, 0, 0, 178.5) # use just color or theme_text_color + text color for  label text
+                    halign: 'left'
+                    #pos_hint: {"center_x":.5, "center_y":.5}
+                    #md_bg_color: rgba(106, 206, 209, 120)
+                    #pos: icontextbox.x + 4, icontextbox.y + icontextbox.height + 5
+                ImageButton:
+                    size_hint: 1, None
+                    height: 48
+                    radius: 4
+                    spacing: 6
+                    padding: 15, 5, 6, 5
+                    md_bg_color: 1, 1, 1, 1
+                    #md_bg_color: rgba(235, 235, 235, 255)
+                    ripple_scale: .2
+                    on_release:
+                        root.show_date_picker()
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, .12
+                        Line:
+                            width: 1
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                    MDLabel:
+                        id: rent_date
+                        text: '2022.04.26'
+                        font_name: "MPoppins"
+                        font_name: 'RNanum'
+                        font_size: 15
+                        color: rgba(0, 0, 0, 178.5)
+                        size_hint: 1, None
+                        adaptive_height: True
+                        pos_hint: {"center_x":.5,"center_y": .5}
+
+                    MDBoxLayout:
+                        adaptive_width: True
+                        MDBoxLayout:
+                            md_bg_color: rgba(235, 235, 235, 255)
+                            size_hint: None, None
+                            width: 1.5
+                            height: 40
+                            pos_hint: {"center_x":.5,"center_y": .5}
+                        MDIconButton:
+                            icon: 'calendar-edit'
+                            adaptive_size: True
+                            font_size: "20sp"
+                            theme_text_color: 'Custom'
+                            text_color: rgba(71,92,119,178.5)
+                            pos_hint: {"center_x":.5,"center_y": .5}
+                            #md_bg_color: rgba(122, 222, 122, 255)
+                            on_release:
+                                root.manager.current = 'main'
+
+            # Select Customer
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: .9, None
+                adaptive_height: True
+                #md_bg_color: rgba(106, 206, 209, 20)
+                spacing: 5
+                MDLabel:
+                    #text: 'Select Customer'
+                    #font_name: "MPoppins"
+                    text: '고객 선택'
+                    font_name: 'BNanum'
+                    font_size: 12
+                    adaptive_height: True
+                    #theme_text_color: "Custom"
+                    #text_color: 0, 0, 0, .6
+                    color: rgba(0, 0, 0, 178.5) # use just color or theme_text_color + text color for  label text
+                    halign: 'left'
+                    #md_bg_color: rgba(106, 206, 209, 120)
+                MDBoxLayout:
+                    size_hint: 1, None
+                    height: 48
+                    radius: 4
+                    spacing: 6
+                    padding: 12, 5, 6, 5
+                    md_bg_color: 1, 1, 1, 1
+                    #md_bg_color: rgba(235, 235, 235, 255)
+                    #pos_hint: {"center_x":.5,"center_y": .6}
+                    canvas.before:
+                        Color:
+                            rgba: rgba(71, 92, 119, 30.6)
+                        Line:
+                            width: 1
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                    TextInput:
+                        id: customer
+                        #hint_text: "Select Customer"
+                        #font_name: "MPoppins"
+                        hint_text: "고객 선택하세요"
+                        font_name: 'RNanum'
+                        hint_text_color: rgba(206, 206,206, 255)
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1,1,1,0
+                        padding: 5,9
+                        foreground_color: rgba(71, 92, 119, 255)
+                        #on_text_validate: root.search_input(search_text.text)
+                        #on_text: root.field_drop_down(self, customer.text)
+                        #on_text: root.search_customer(self, customer.text, search=True)
+                        on_text_validate: root.search_customer(self, customer.text, search=True)
+                    MDBoxLayout:
+                        adaptive_width: True
+                        MDBoxLayout:
+                            md_bg_color: rgba(235, 235, 235, 255)
+                            size_hint: None, None
+                            width: 1.5
+                            height: 40
+                            pos_hint: {"center_x":.5,"center_y": .5}
+                        MDIconButton:
+                            id: dropdown
+                            icon: 'chevron-down'
+                            adaptive_size: True
+                            theme_text_color: 'Custom'
+                            text_color: rgba(71,92,119,178.5)
+                            font_size: "20sp"
+                            pos_hint: {"center_x":.5,"center_y": .5}
+                            #md_bg_color: rgba(122, 222, 122, 255)
+                            on_release:
+                                root.drop_down(self)
+
+            MDLabel:
+                #text: 'or'
+                #font_name: 'MPoppins'
+                text: '또는'
+                font_name: 'BNanum'
+                halign: 'center'
+                font_size: 14
+                pos_hint: {"center_x":.5,"center_y": .5}
+
+
+            IconButton:
+                size_hint: 1, None
+                height: 42
+                radius: 4
+                #padding: 24, 0
+                #spacing: 24
+                md_bg_color: rgba(235, 235, 235, 255)
+                pos_hint: {"center_x":.5,"center_y": .4}
+                on_release:
+                    #root.manager.current = "add_customer"
+                    #root.add_customer1()
+                    root.show_add_customer_dialog()
+                    #root.add_new_customer()
+                MDBoxLayout:
+                    padding: 16, 0
+                    spacing: 8
+                    adaptive_size: True
+                    pos_hint: {"center_x":.5, "center_y": .5}
+                    #md_bg_color: rgba(222, 222, 122, 255)
+                    MDIcon:
+                        icon: 'plus'
+                        adaptive_size: True
+                        pos_hint: {"center_x":.5,"center_y": .5}
+                        theme_text_color: "Custom"
+                        text_color: 0, 0, 0, .7
+                        #md_bg_color: rgba(222, 122, 222, 255)
+                    MDLabel:
+                        text: '새 고객 등록'
+                        font_name: 'BNanum'
+                        font_size: 14
+                        halign: 'left'
+                        size_hint: None, 1
+                        adaptive_width: True
+                        theme_text_color: "Custom"
+                        text_color: 0, 0, 0, .7
+                        pos_hint: {"center_x":.5,"center_y": .5}
+                        #text: 'Create New Customer'
+                        #font_name: 'MPoppins'
+                        #md_bg_color: rgba(122, 222, 122, 255)
+
+        MDBoxLayout:
+            adaptive_height: True
+            padding:16
+            pos_hint: {"center_x": .5,"y": 0}
+            #md_bg_color: rgba(122, 222, 122, 255)
+            Button:
+                text: "다음"
+                font_name: 'BNanum'
+                size_hint: .9, None
+                height: 42
+                #pos_hint: {"center_x": .5,"center_y": .08}
+                background_color: 0, 0, 0, 0
+                font_size: "18sp"
+                color: 1, 1, 1, 1
+                on_release:
+                    root.pass_details(customer.text, rent_date.text)
+                    root.clr_txt()
+                    #root.add_new_product(serial.text, name.text, year.text, version.text, category.text, entry_date.text, owner.text, user.text, status.text)
+                canvas.before:
+                    Color:
+                        rgb: rgba(71,92,119,205)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [4]
+
+
+# Add New Customer Page
+<AddCustomerScreen>:
+    name: 'add_customer'
+    MDFloatLayout:
+        #md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"top": 1}
+            on_release:
+                root.manager.transition.direction = "right"
+                root.manager.current = "main"
+        MDLabel:
+            md_bg_color: rgba(206, 206, 209, 20)
+            size_hint: 1, None
+            height: 50
+            pos_hint: {"center_x": .5, "top": 1}
+            text: '고객 등록' #"A d d  C u s t o m e r"
+            halign: "center"
+            font_name: 'RNanum' #"LPoppins"
+            font_size: 20
+        MDGridLayout:
+            rows: 4
+            padding: 16
+            spacing: 25
+            adaptive_height: True
+            pos_hint: {"center_x": .5,"top": .9}
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: 1, None
+                adaptive_height: True
+                #md_bg_color: rgba(106, 206, 209, 20)
+                spacing: 5
+                MDLabel:
+                    text: '회사명' #'Organization Name'
+                    font_name: 'BNanum' #"MPoppins"
+                    font_size: 12
+                    adaptive_height: True
+                    theme_text_color: "Custom"
+                    text_color: 0, 0, 0, .6
+                    halign: 'left'
+                MDBoxLayout:
+                    size_hint: 1, None
+                    height: 42
+                    radius: 4
+                    spacing: 6
+                    padding: 12, 2, 6, 0
+                    md_bg_color: 1, 1, 1, 1
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, .12
+                        Line:
+                            width: 1
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                    TextInput:
+                        id: org_name
+                        hint_text: '탑필드' #'ToppField'
+                        hint_text_color: rgba(206, 206,206, 255)
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1,1,1,0
+                        foreground_color: 0, 0, 0, .7
+                        #foreground_color: rgba(71, 92, 119, 255)
+                        padding: 0,9
+                        font_name: 'BNanum' #"MPoppins"
+                        #on_text_validate: root.search_input(search_text.text)
+
+            # Staff Name Input
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: 1, None
+                adaptive_height: True
+                #md_bg_color: rgba(106, 206, 209, 20)
+                spacing: 5
+                MDLabel:
+                    text: '성함' #'Staff Name'
+                    font_name: 'BNanum' #"MPoppins"
+                    font_size: 12
+                    adaptive_height: True
+                    theme_text_color: "Custom"
+                    text_color: 0, 0, 0, .6
+                    halign: 'left'
+                MDBoxLayout:
+                    size_hint: 1, None
+                    height: 42
+                    radius: 4
+                    spacing: 6
+                    padding: 12, 2, 6, 0
+                    md_bg_color: 1, 1, 1, 1
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, .12
+                        Line:
+                            width: 1
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                    TextInput:
+                        id: staff_name
+                        hint_text: '홍길동' #'Dogara'
+                        hint_text_color: rgba(206, 206,206, 255)
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1,1,1,0
+                        foreground_color: 0, 0, 0, .7
+                        #foreground_color: rgba(71, 92, 119, 255)
+                        padding: 0,9
+                        font_name: 'BNanum' #"MPoppins"
+                        #on_text_validate: root.search_input(search_text.text)
+
+            # Phone Number Input
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: 1, None
+                adaptive_height: True
+                #md_bg_color: rgba(106, 206, 209, 20)
+                spacing: 5
+                MDLabel:
+                    text: '전화 번호' #'Phone Number'
+                    font_name: 'BNanum' #"MPoppins"
+                    font_size: 12
+                    adaptive_height: True
+                    theme_text_color: "Custom"
+                    text_color: 0, 0, 0, .6
+                    halign: 'left'
+                MDBoxLayout:
+                    size_hint: 1, None
+                    height: 42
+                    radius: 4
+                    spacing: 6
+                    padding: 12, 2, 6, 0
+                    md_bg_color: 1, 1, 1, 1
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, .12
+                        Line:
+                            width: 1
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                    TextInput:
+                        id: phone_no
+                        hint_text: '01012345678'
+                        hint_text_color: rgba(206, 206,206, 255)
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1,1,1,0
+                        foreground_color: 0, 0, 0, .7
+                        #foreground_color: rgba(71, 92, 119, 255)
+                        padding: 0,9
+                        font_name: 'BNanum' #"MPoppins"
+                        #on_text_validate: root.search_input(search_text.text)
+
+            # Email Input
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: 1, None
+                adaptive_height: True
+                #md_bg_color: rgba(106, 206, 209, 20)
+                spacing: 5
+                MDLabel:
+                    text: '이메일' #'Email'
+                    font_name: 'BNanum' #"MPoppins"
+                    font_size: 12
+                    adaptive_height: True
+                    theme_text_color: "Custom"
+                    text_color: 0, 0, 0, .6
+                    halign: 'left'
+                MDBoxLayout:
+                    size_hint: 1, None
+                    height: 42
+                    radius: 4
+                    spacing: 6
+                    padding: 12, 2, 6, 0
+                    md_bg_color: 1, 1, 1, 1
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, .12
+                        Line:
+                            width: 1
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                    TextInput:
+                        id: email
+                        hint_text: 'staff@company.com'
+                        hint_text_color: rgba(206, 206,206, 255)
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1,1,1,0
+                        foreground_color: 0, 0, 0, .7
+                        #foreground_color: rgba(71, 92, 119, 255)
+                        padding: 0,9
+                        font_name: 'BNanum' #"MPoppins"
+                        #on_text_validate: root.search_input(search_text.text)
+
+        MDBoxLayout:
+            adaptive_height: True
+            padding:16
+            pos_hint: {"center_x": .5,"y": 0}
+            #md_bg_color: rgba(122, 222, 122, 255)
+            Button:
+                text: "저장"
+                size_hint: .9, None
+                height: 42
+                #pos_hint: {"center_x": .5,"center_y": .08}
+                background_color: 0, 0, 0, 0
+                font_name: 'BNanum' #"MPoppins"
+                font_size: "18sp"
+                color: 1, 1, 1, 1
+                on_release:
+                    root.add_new_customer(org_name.text, staff_name.text, phone_no.text, email.text)
+                    root.clr_txt()
+                    #root.show_details()
+                    #root.manager.current = "product_details"
+                canvas.before:
+                    Color:
+                        rgb: rgba(71,92,119,205)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [4]
+
+
+# Multi Scan Page
+<ScanScreenNew>:
+    name: 'multi_scan'
+    on_enter: root.scan()
+    MDFloatLayout:
+        md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"top": 1}
+            on_release:
+                #root.release_cam()
+                root.manager.current = "main"
+        MDLabel:
+            id: title
+            md_bg_color: rgba(206, 206, 209, 20)
+            size_hint: 1, None
+            height: 50
+            pos_hint: {"center_x": .5, "top": 1}
+            text: "스 캔"
+            halign: "center"
+            font_name: "BNanum"
+            font_size: 20
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: 16, 5
+            spacing: 15
+            size_hint: 1, None
+            #width: 310
+            adaptive_height: True
+            pos_hint: {"center_x": .5,"top": .9}
+            #md_bg_color: rgba(141, 241, 243, 255)
+
+            # Camera Widget
+            MDBoxLayout:
+                id: cam_box
+                md_bg_color: rgba(235, 235, 235, 255)
+                #size_hint: .77, .41
+                size_hint: None, None
+                height: '220dp'
+                width: '235dp'
+                #height: '168dp'
+                #width: '224dp'
+                radius: 12
+                pos_hint: {"center_x": .5}
+
+            # Enter Serial Manually
+            MDBoxLayout:
+                size_hint: 1, None
+                height: 42
+                radius: 4
+                spacing: 6
+                padding: 12, 5, 6, 5
+                md_bg_color: rgba(235, 235, 235, 255)
+                pos_hint: {"center_x":.5,"center_y": .6}
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, .12
+                    Line:
+                        width: 1
+                        rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                TextInput:
+                    id: manual_serial
+                    hint_text: "시리얼 입력하세요!"
+                    valign: 'center'
+                    hint_text_color: rgba(206, 206,206, 255)
+                    pos_hint: {"center_x":.5, "center_y":.5}
+                    height: self.minimum_height
+                    cursor_color: rgba(206, 206,206, 255)
+                    cursor_width: "2sp"
+                    multiline: False
+                    #padding: 5,9
+                    background_color: 1,1,1,0
+                    foreground_color: rgba(71, 92, 119, 255)
+                    font_name: "RNanum"
+                    on_text_validate: root.search_product(self, manual_serial.text, search=True )
+                    #on_text_validate: root.add_manually(manual_serial.text)
+                MDIconButton:
+                    icon: 'plus'
+                    adaptive_size: True
+                    theme_text_color: 'Custom'
+                    text_color: rgba(71,92,119,178.5)
+                    font_size: "20sp"
+                    pos_hint: {"center_x":.5,"center_y": .5}
+                    #md_bg_color: rgba(122, 222, 122, 255)
+                    on_release:
+                        root.add_manually(manual_serial.text)
+
+            # Space for StackLayout
+
+            # Space for ListView
+            ScrollView:
+                id: add_container
+                pos_hint: {"center_x": .5}
+                size_hint: 1, None
+                height: 140
+                MDList:
+                    id: add_scan_list
+                    radius: 12
+                    padding: 0
+                    #md_bg_color: rgba(206, 206, 209, 255)
+
+        MDBoxLayout:
+            adaptive_height: True
+            padding: 16
+            pos_hint: {"center_x": .5,"y": 0}
+            #md_bg_color: rgba(122, 222, 122, 255)
+            Button:
+                text: "저장"
+                size_hint: .9, None
+                height: 42
+                #pos_hint: {"center_x": .5,"center_y": .08}
+                background_color: 0, 0, 0, 0
+                font_name: "RNanum"
+                font_size: "18sp"
+                color: 1, 1, 1, 1
+                on_release:
+                    #root.manager.current = "lend"
+                    #root.scan()
+                    root.release_cam()
+                canvas.before:
+                    Color:
+                        rgb: rgba(71,92,119,205)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [4]
+
+
+# USIM Screen and Widgets
+<UsimCard>:
+    padding: 16, 5, 16, 5
+    spacing: 16
+    size_hint: 1, None
+    height: 72
+    radius: 5
+    #md_bg_color: rgba(242, 243, 243, 255)
+    #md_bg_color: rgba(249, 249, 249, 80)
+    on_release:
+    #print(self.serial)
+    MDBoxLayout:
+        orientation: 'vertical'
+        adaptive_width: True
+        spacing: 5
+        padding: 5
+        #md_bg_color: rgba(50, 169, 38, 80)
+        pos_hint: {"center_y": .5}
+        MDLabel:
+            id: device
+            text: root.device
+            font_name: "RNanum"
+            font_size: 12
+            #color: rgba(23, 65, 75, 255)
+            halign: "left"
+            adaptive_size:True
+            #pos_hint: {"x": .24, "center_y": .65}
+            #md_bg_color: rgba(255, 170, 23, 255)
+        MDLabel:
+            id: name_number
+            text: root.name_number
+            font_name: "RNanum"
+            font_size: 12
+            color: rgba(132, 140, 140, 255)
+            #color: rgba(144, 175, 178, 255)
+            halign: "left"
+            adaptive_size:True
+            #md_bg_color: rgba(255, 170, 23, 255)
+        MDLabel:
+            id: serial
+            text: root.serial
+            font_name: "BNanum"
+            font_size: 12
+            color: rgba(132, 140, 140, 255)
+            #color: rgba(144, 175, 178, 255)
+            halign: "center"
+            adaptive_size:True
+            #md_bg_color: rgba(255, 170, 23, 255)
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'top'
+        MDBoxLayout:
+            orientation: 'vertical'
+            adaptive_size:True
+            padding: 5
+            #md_bg_color: rgba(38, 50, 169, 80)
+            MDBoxLayout:
+                radius: 3
+                size_hint: None, None
+                adaptive_size: True
+                padding: 8, 3, 8, 3
+                md_bg_color: rgba(215,223,204)
+                MDLabel:
+                    id: status
+                    text: root.status
+                    font_name: "BNanum"
+                    font_size: 10
+                    #theme_text_color: "Custom"
+                    #text_color: 0, .5, 0, 1
+                    color: rgba(68,107,17,255)
+                    halign: "right"
+                    adaptive_size:True
+
+<Status>:
+    radius: 3
+    size_hint: None, None
+    adaptive_size: True
+    padding: 8, 3, 8, 3
+    #md_bg_color: rgba(215,223,204,255)
+    #md_bg_color: rgba(root.bg_color)
+    md_bg_color:
+        rgba(231, 238, 254, 255) if status.text == 'NEW' \
+        else rgba(215, 223, 204, 255) if status.text == 'inUse' \
+        else rgba(243, 245, 249, 255) if status.text == 'Burrowed' \
+        else rgba(250, 246, 202, 255) if status.text == 'Sold' \
+        else rgba(255, 231, 227, 255) if status.text == 'Damaged' \
+        else  rgba(root.bg_color)
+    MDLabel:
+        id: status
+        text: root.status
+        font_name: "BNanum"
+        font_size: 10
+        #theme_text_color: "Custom"
+        #text_color: 0, .5, 0, 1
+        #color: rgba(68,107,17,255)
+        #color: rgba(root.text_color)
+        color:
+            rgba(52, 88, 128, 255) if status.text == 'NEW' \
+            else rgba(68, 107, 17, 255) if status.text == 'inUse' \
+            else rgba(174, 175, 179, 255) if status.text == 'Burrowed' \
+            else rgba(130, 109, 60, 255) if status.text == 'Sold' \
+            else rgba(118, 44, 42, 255) if status.text == 'Damaged' \
+            else rgba(root.text_color)
+        halign: "right"
+        adaptive_size:True
+
+
+<USIMScreen>:
+    name: 'usim'
+    on_enter: root.prompt_get_all_usim()
+    MDFloatLayout:
+        id: screen_box
+        #md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"top": 1}
+            on_release:
+                root.manager.transition.direction = "right"
+                root.manager.current = "main"
+        MDLabel:
+            md_bg_color: rgba(206, 206, 209, 20)
+            size_hint: 1, None
+            height: 50
+            pos_hint: {"center_x": .5, "top": 1}
+            text: "u S I M"
+            halign: "center"
+            font_name: "LPoppins"
+            font_size: 20
+        MDBoxLayout:
+            #padding: 15
+            spacing: 10
+            #adaptive_height: True
+            orientation: 'vertical'
+            pos_hint: {"center_x": .5,"top": .9}
+            #md_bg_color: rgba(141, 241, 243, 255)
+
+            # Search Box Layout
+            MDBoxLayout:
+                padding: 16, 5, 16, 0
+                adaptive_height: True
+
+                # Search Box
+                MDBoxLayout:
+                    size_hint: 1, None
+                    height: 42
+                    radius: 4
+                    spacing: 6
+                    padding: 12, 2, 6, 0
+                    md_bg_color: 1, 1, 1, 1
+                    #md_bg_color: rgba(235, 235, 235, 255)
+                    #pos_hint: {"center_x":.5,"center_y": .6}
+                    canvas.before:
+                        Color:
+                            rgba: rgba(71, 92, 119, 30.6)
+                        Line:
+                            width: 1
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 12, 12, 12, 12, 100
+                    MDIcon:
+                        icon: 'magnify'
+                        adaptive_size: True
+                        theme_text_color: 'Custom'
+                        text_color: rgba(71,92,119,178.5)
+                        font_size: "20sp"
+                        pos_hint: {"center_x":.5,"center_y": .5}
+                        #md_bg_color: rgba(122, 222, 122, 255)
+                    TextInput:
+                        id: search_usim
+                        hint_text: "Select Serial"
+                        hint_text_color: rgba(206, 206,206, 255)
+                        font_name: "MPoppins"
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1,1,1,0
+                        padding: 0,9
+                        foreground_color: rgba(71, 92, 119, 255)
+                        #on_text: root.search_usim_by_serial(search_usim.text)
+                        on_text_validate: root.search_usim_by_serial(search_usim.text)
+                        #on_text_validate: root.search(search_text.text)
+
+            # USIM List
+            MDBoxLayout:
+                id: container
+                ScrollView:
+                    padding: 5
+                    MDList:
+                        id: usim_list
+                        size_hint: 1, None
+                        adaptive_height: True
+                        #spacing: 5
+                        #md_bg_color: rgba(206, 206, 209, 255)
+                        UsimCard:
+                        UsimCard:
+                        UsimCard:
+                        UsimCard:
+                        UsimCard:
+                        UsimCard:
+                        UsimCard:
+                        UsimCard:
+                        UsimCard:
+                        UsimCard:
+                        UsimCard:
+                        UsimCard:
+                        UsimCard:
+                        UsimCard:
+            Widget:
+                size_hint: 1, None
+                height: 50
+        DGFAB:
+            size_hint: None, None
+            width: 40
+            height: 40
+            radius: 20
+            padding: 8
+            elevation: 5
+            md_bg_color: rgba(255, 255, 255, 245)
+            pos: screen_box.right - self.width -16, screen_box.y + 16
+            on_release:
+                root.manager.current = "add_usim"
+            MDIcon:
+                icon: 'plus'
+
+
+# Add USIM Screen
+<AddUSIMScreen>:
+    name: 'add_usim'
+    on_enter: root.date_today()
+    md_bg_color: 1, 1, 1, 1
+    # Enter Usim Details Page
+    MDFloatLayout:
+        #md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"top": 1}
+            on_release:
+                root.manager.transition.direction = "right"
+                root.manager.current = "usim"
+        MDLabel:
+            size_hint: 1, None
+            height: 50
+            pos_hint: {"center_x": .5, "top": 1}
+            text: "N e w  u S I M"
+            halign: "center"
+            font_name: "LPoppins"
+            font_size: 20
+        ScrollView:
+            #size:self.size
+            size_hint: 1, .8
+            pos_hint: {"center_x": .5,"top": .9}
+            MDGridLayout:
+                rows: 7
+                padding: 15, 5, 15, 0
+                spacing: 10
+                adaptive_height: True
+
+                # Select Owner
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint: .9, None
+                    adaptive_height: True
+                    #md_bg_color: rgba(106, 206, 209, 20)
+                    spacing: 5
+                    MDLabel:
+                        text: 'Owner'
+                        font_name: "MPoppins"
+                        font_size: 12
+                        adaptive_height: True
+                        #theme_text_color: "Custom"
+                        #text_color: 0, 0, 0, .6
+                        color: rgba(0, 0, 0, 178.5) # use just color or theme_text_color: "Custom" + text_color: ... for  label text
+                        halign: 'left'
+                        #md_bg_color: rgba(106, 206, 209, 120)
+                    MDBoxLayout:
+                        size_hint: 1, None
+                        height: 42
+                        radius: 4
+                        spacing: 6
+                        padding: 12, 2, 6, 0
+                        md_bg_color: 1, 1, 1, 1
+                        #md_bg_color: rgba(235, 235, 235, 255)
+                        #pos_hint: {"center_x":.5,"center_y": .6}
+                        canvas.before:
+                            Color:
+                                rgba: rgba(71, 92, 119, 30.6)
+                            Line:
+                                width: 1
+                                rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                        TextInput:
+                            id: usim_owner
+                            hint_text: "Dogara"
+                            hint_text_color: rgba(206, 206,206, 255)
+                            font_name: "MPoppins"
+                            pos_hint: {"center_x":.5, "center_y":.5}
+                            height: self.minimum_height
+                            cursor_color: rgba(206, 206,206, 255)
+                            cursor_width: "2sp"
+                            multiline: False
+                            background_color: 1,1,1,0
+                            padding: 0,9
+                            foreground_color: rgba(71, 92, 119, 255)
+                            #on_text_validate: root.search_input(search_text.text)
+                        MDBoxLayout:
+                            adaptive_width: True
+                            MDBoxLayout:
+                                md_bg_color: rgba(235, 235, 235, 255)
+                                size_hint: None, None
+                                width: 1.5
+                                height: 40
+                                pos_hint: {"center_x":.5,"center_y": .5}
+                            MDIconButton:
+                                icon: 'chevron-down'
+                                adaptive_size: True
+                                theme_text_color: 'Custom'
+                                text_color: rgba(71,92,119,178.5)
+                                font_size: "20sp"
+                                pos_hint: {"center_x":.5,"center_y": .5}
+                                #md_bg_color: rgba(122, 222, 122, 255)
+                                on_release:
+                                    root.manager.current = 'main'
+
+                DGTextField:
+                    id: usim_serial
+                    title: 'Serial Number'
+                    hint_text: '1234-5678-9101-1213-141F'
+
+                MDGridLayout:
+                    cols: 2
+                    spacing: 15
+                    adaptive_height: True
+                    DGTextField:
+                        id: usim_no
+                        title: 'Phone Number'
+                        hint_text: '01012345678'
+
+                    DGTextField:
+                        id: usim_period
+                        title: 'Contract Period'
+                        hint_text: '10 Months'
+
+                # Select Date
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint: .9, None
+                    adaptive_height: True
+                    #md_bg_color: rgba(106, 206, 209, 20)
+                    spacing: 5
+                    MDLabel:
+                        text: 'Contract Start Date'
+                        font_name: "MPoppins"
+                        font_size: 12
+                        adaptive_height: True
+                        #theme_text_color: "Custom"
+                        #text_color: 0, 0, 0, .6
+                        color: rgba(0, 0, 0, 178.5) # use just color or theme_text_color + text color for  label text
+                        halign: 'left'
+                        #pos_hint: {"center_x":.5, "center_y":.5}
+                        #md_bg_color: rgba(106, 206, 209, 120)
+                        #pos: icontextbox.x + 4, icontextbox.y + icontextbox.height + 5
+                    MDBoxLayout:
+                        size_hint: 1, None
+                        height: 42
+                        radius: 4
+                        spacing: 6
+                        padding: 12, 2, 6, 0
+                        md_bg_color: 1, 1, 1, 1
+                        #md_bg_color: rgba(235, 235, 235, 255)
+                        #ripple_scale: .2
+                        #on_release:
+                            #root.show_date_picker()
+                        canvas.before:
+                            Color:
+                                rgba: 0, 0, 0, .12
+                            Line:
+                                width: 1
+                                rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                        MDLabel:
+                            id: start_date
+                            text: '2022.04.26'
+                            font_name: "MPoppins"
+                            font_size: 15
+                            color: rgba(206, 206,206, 255)
+                            #color: rgba(0, 0, 0, 178.5)
+                            size_hint: 1, None
+                            adaptive_height: True
+                            pos_hint: {"center_x":.5,"center_y": .5}
+
+                        MDBoxLayout:
+                            adaptive_width: True
+                            MDBoxLayout:
+                                md_bg_color: rgba(235, 235, 235, 255)
+                                size_hint: None, None
+                                width: 1.5
+                                height: 40
+                                pos_hint: {"center_x":.5,"center_y": .5}
+                            MDIconButton:
+                                icon: 'calendar-edit'
+                                adaptive_size: True
+                                font_size: "20sp"
+                                theme_text_color: 'Custom'
+                                text_color: rgba(71,92,119,178.5)
+                                pos_hint: {"center_x":.5,"center_y": .5}
+                                #md_bg_color: rgba(122, 222, 122, 255)
+                                on_release:
+                                    root.show_date_picker()
+
+                # Select End Date
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint: .9, None
+                    adaptive_height: True
+                    #md_bg_color: rgba(106, 206, 209, 20)
+                    spacing: 5
+                    MDLabel:
+                        text: 'Contract End Date'
+                        font_name: "MPoppins"
+                        font_size: 12
+                        adaptive_height: True
+                        #theme_text_color: "Custom"
+                        #text_color: 0, 0, 0, .6
+                        color: rgba(0, 0, 0, 178.5) # use just color or theme_text_color + text color for  label text
+                        halign: 'left'
+                        #pos_hint: {"center_x":.5, "center_y":.5}
+                        #md_bg_color: rgba(106, 206, 209, 120)
+                        #pos: icontextbox.x + 4, icontextbox.y + icontextbox.height + 5
+                    ImageButton:
+                        size_hint: 1, None
+                        height: 42
+                        radius: 4
+                        spacing: 6
+                        #padding: 15, 5, 6, 5
+                        padding: 12, 2, 6, 0
+                        md_bg_color: 1, 1, 1, 1
+                        #md_bg_color: rgba(235, 235, 235, 255)
+                        #ripple_scale: .2
+                        #on_release:
+                            #root.show_date_picker()
+                        canvas.before:
+                            Color:
+                                rgba: 0, 0, 0, .12
+                            Line:
+                                width: 1
+                                rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                        MDLabel:
+                            id: end_date
+                            text: '2022.05.03'
+                            font_name: "MPoppins"
+                            font_size: 15
+                            color: rgba(206, 206,206, 255)
+                            #color: rgba(0, 0, 0, 178.5)
+                            size_hint: 1, None
+                            adaptive_height: True
+                            pos_hint: {"center_x":.5,"center_y": .5}
+
+                        MDBoxLayout:
+                            adaptive_width: True
+                            MDBoxLayout:
+                                md_bg_color: rgba(235, 235, 235, 255)
+                                size_hint: None, None
+                                width: 1.5
+                                height: 40
+                                pos_hint: {"center_x":.5,"center_y": .5}
+                            MDIconButton:
+                                icon: 'calendar-edit'
+                                adaptive_size: True
+                                font_size: "20sp"
+                                theme_text_color: 'Custom'
+                                text_color: rgba(71,92,119,178.5)
+                                pos_hint: {"center_x":.5,"center_y": .5}
+                                #md_bg_color: rgba(122, 222, 122, 255)
+                                on_release:
+                                    root.show_date_picker()
+
+                # Select Device
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint: .9, None
+                    adaptive_height: True
+                    #md_bg_color: rgba(106, 206, 209, 20)
+                    spacing: 5
+                    MDLabel:
+                        text: 'Select Device'
+                        font_name: "MPoppins"
+                        font_size: 12
+                        adaptive_height: True
+                        #theme_text_color: "Custom"
+                        #text_color: 0, 0, 0, .6
+                        color: rgba(0, 0, 0, 178.5) # use just color or theme_text_color + text color for  label text
+                        halign: 'left'
+                        #md_bg_color: rgba(106, 206, 209, 120)
+                    MDBoxLayout:
+                        size_hint: 1, None
+                        height: 42
+                        radius: 4
+                        spacing: 6
+                        padding: 12, 2, 6, 0
+                        md_bg_color: 1, 1, 1, 1
+                        #md_bg_color: rgba(235, 235, 235, 255)
+                        #pos_hint: {"center_x":.5,"center_y": .6}
+                        canvas.before:
+                            Color:
+                                rgba: rgba(71, 92, 119, 30.6)
+                            Line:
+                                width: 1
+                                rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                        TextInput:
+                            id: device
+                            hint_text: "XP20 No.5"
+                            hint_text_color: rgba(206, 206,206, 255)
+                            font_name: "MPoppins"
+                            pos_hint: {"center_x":.5, "center_y":.5}
+                            height: self.minimum_height
+                            cursor_color: rgba(206, 206,206, 255)
+                            cursor_width: "2sp"
+                            multiline: False
+                            background_color: 1,1,1,0
+                            padding: 0,9
+                            foreground_color: rgba(71, 92, 119, 255)
+                            #on_text_validate: root.search_input(search_text.text)
+                        MDBoxLayout:
+                            adaptive_width: True
+                            MDBoxLayout:
+                                md_bg_color: rgba(235, 235, 235, 255)
+                                size_hint: None, None
+                                width: 1.5
+                                height: 40
+                                pos_hint: {"center_x":.5,"center_y": .5}
+                            MDIconButton:
+                                icon: 'chevron-down'
+                                adaptive_size: True
+                                theme_text_color: 'Custom'
+                                text_color: rgba(71,92,119,178.5)
+                                font_size: "20sp"
+                                pos_hint: {"center_x":.5,"center_y": .5}
+                                #md_bg_color: rgba(122, 222, 122, 255)
+                                on_release:
+                                    root.manager.current = 'main'
+
+        MDBoxLayout:
+            adaptive_height: True
+            padding:16
+            pos_hint: {"center_x": .5,"y": 0}
+            #md_bg_color: rgba(122, 222, 122, 255)
+            Button:
+                text: "Next"
+                size_hint: .9, None
+                height: 42
+                #pos_hint: {"center_x": .5,"center_y": .08}
+                background_color: 0, 0, 0, 0
+                font_name: "MPoppins"
+                font_size: "18sp"
+                color: 1, 1, 1, 1
+                on_release:
+                    root.add_new_usim(usim_owner.text, usim_serial.text, device.text, usim_no.text, usim_period.text, start_date.text, end_date.text, 'Valid')
+                    root.clr_txt()
+                canvas.before:
+                    Color:
+                        rgb: rgba(71,92,119,205)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [4]
+
+# uSIM Details Page
+<USIMDetailScreen>:
+    on_enter: self.show_details()
+    name: 'usim_details'
+    MDFloatLayout:
+        orientation: 'vertical'
+        #md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"top": 1}
+            on_release:
+                root.manager.current = "main"
+                root.clr_txt()
+        MDIconButton:
+            icon: 'pencil'
+            user_font_size: "20sp"
+            pos_hint: {"right": 1, "top": 1}
+            on_release:
+                root.manager.current = "main"
+
+        MDGridLayout:
+            rows: 4
+            MDBoxLayout:
+                size_hint: 1, .45
+                #pos_hint: {"center_x": .5,"top": 1}
+                #md_bg_color: rgba(106, 206, 209, 20)
+                Image:
+                    id: sim_pic
+                    size_hint: 1, .5
+                    source: 'sim_card_detail.png'
+                    pos_hint: {"center_x": .5,"center_y": .5}
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: 1, .2
+                padding:5, 0, 0, 10
+                spacing: 1
+                adaptive_height: True
+                #md_bg_color: rgba(206, 106, 209, 20)
+                #pos_hint: {"center_x": .5,"top": .5}
+                MDLabel:
+                    id: show_device
+                    text: 'XP20, CN'
+                    font_name: "LNoto"
+                    font_size: 14
+                    halign: "center"
+                    adaptive_height: True
+
+                MDLabel:
+                    id: show_serial
+                    text: '1234-5678-9101-1121-314F'
+                    font_name: "MNoto"
+                    font_size: 14
+                    halign: "center"
+                    adaptive_height: True
+
+                MDLabel:
+                    id: show_status
+                    text: 'Valid'
+                    font_name: "LNoto"
+                    font_size: 14
+                    halign: "center"
+                    #theme_text_color: "Custom"
+                    #text_color: 0, .5, 0, 1
+                    color:
+                        rgba(68, 107, 17, 255) if show_status.text == 'Valid' \
+                        else rgba(118, 44, 42, 255) if show_status.text == 'Expired' \
+                        else rgba(0, 0, 0, 178.5)
+                    adaptive_height: True
+
+            MDBoxLayout:
+                adaptive_height: True
+                padding: 20, 0, 20, 0
+                MDSeparator:
+
+            MDGridLayout:
+                rows: 6
+                padding: 16
+                InfoList:
+                    id: show_owner
+                    title: 'Owner'
+                    content: "Dogara"
+                    #content: root.show_owner
+                InfoList:
+                    id: show_phone_no
+                    title: 'Phone Number'
+                    content: "01012345678"
+                    #content: root.show_user
+                InfoList:
+                    id: show_period
+                    title: 'Period'
+                    content: '10 months'
+                    #content: root.show_entry_date
+                InfoList:
+                    id: show_contract_start
+                    title: 'Contract Start Date'
+                    content: '2020.04.30'
+                    #content: '2020.04.30'
+                InfoList:
+                    id: show_contract_end
+                    title: 'Contract End Date'
+                    content: '2020.05.10'
+
+# Customer Screen & Widgets
+<CustomerCard1>:
+    padding: 16
+    spacing: 16
+    size_hint: 1, None
+    height: 72
+    radius: 5
+    #md_bg_color: rgba(249, 249, 249, 80)
+    # on_release: print(self.name)
+    MDBoxLayout:
+        padding: 0
+        size_hint: None, None
+        width: 40
+        height: 40
+        #md_bg_color: rgba(169, 50, 38, 80)
+        Image:
+            source: root.source
+            adaptive_size: True
+            pos_hint: {"center_x": .12, "center_y": .5}
+    MDBoxLayout:
+        orientation: 'vertical'
+        adaptive_size: True
+        #md_bg_color: rgba(50, 169, 38, 80)
+        MDLabel:
+            id: name
+            text: root.name
+            font_name: "MPoppins"
+            font_size: 14
+            halign: "left"
+            adaptive_size:True
+            #pos_hint: {"x": .24, "center_y": .65}
+            #md_bg_color: rgba(255, 170, 23, 255)
+        MDLabel:
+            id: phone_no
+            text: root.phone_no
+            font_name: "LPoppins"
+            font_size: 13
+            halign: "center"
+            adaptive_size:True
+            #pos_hint: {"x": .24, "center_y": .4}
+            #md_bg_color: rgba(255, 170, 23, 255)
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'top'
+        MDBoxLayout:
+            adaptive_size:True
+            #md_bg_color: rgba(38, 50, 169, 80)
+            MDLabel:
+                id: org
+                text: root.org
+                font_name: "LPoppins"
+                font_size: 11
+                theme_text_color: "Custom"
+                #text_color: 0, .5, 0, 1
+                halign: "right"
+                adaptive_size:True
+                #pos_hint: {"x": .24, "center_y": .4}
+                #md_bg_color: rgba(255, 170, 23, 255)
+
+
+<CustomerCard>:
+    padding: 16, 5, 16, 5
+    spacing: 16
+    size_hint: 1, None
+    height: 72
+    radius: 5
+    #md_bg_color: rgba(242, 243, 243, 255)
+    #md_bg_color: rgba(249, 249, 249, 80)
+    on_release:
+    #print(self.serial)
+    MDBoxLayout:
+        orientation: 'vertical'
+        adaptive_width: True
+        spacing: 5
+        padding: 5
+        #md_bg_color: rgba(50, 169, 38, 80)
+        pos_hint: {"center_y": .5}
+        MDLabel:
+            id: name
+            text: root.name_org
+            font_name: "RNanum"
+            font_size: 12
+            #color: rgba(23, 65, 75, 255)
+            halign: "left"
+            adaptive_size:True
+            #pos_hint: {"x": .24, "center_y": .65}
+            #md_bg_color: rgba(255, 170, 23, 255)
+        MDLabel:
+            id: phone_no
+            text: root.phone_number
+            font_name: "RNanum"
+            font_size: 12
+            color: rgba(132, 140, 140, 255)
+            #color: rgba(144, 175, 178, 255)
+            halign: "left"
+            adaptive_size:True
+            #md_bg_color: rgba(255, 170, 23, 255)
+        MDLabel:
+            id: email
+            text: root.email
+            font_name: "BNanum"
+            font_size: 12
+            color: rgba(132, 140, 140, 255)
+            #color: rgba(144, 175, 178, 255)
+            halign: "center"
+            adaptive_size:True
+            #md_bg_color: rgba(255, 170, 23, 255)
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'bottom'
+        MDBoxLayout:
+            #md_bg_color: rgba(38, 50, 169, 80)
+            size_hint: None, None
+            spacing:5
+            adaptive_width: True
+            #width: 50
+            height: 50
+            MDIconButton:
+                icon: 'phone'
+                theme_text_color: 'Custom'
+                text_color: (0, .5, 0, 1)
+                pos_hint: {"center_x":.5, "center_y":.5}
+
+
+<CustomerScreen>:
+    name: 'customer'
+    on_enter: root.prompt_get_all_customers()
+    MDFloatLayout:
+        id: screen_box
+        #md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"top": 1}
+            on_release:
+                root.manager.transition.direction = "right"
+                root.manager.current = "main"
+        MDLabel:
+            md_bg_color: rgba(206, 206, 209, 20)
+            size_hint: 1, None
+            height: 50
+            pos_hint: {"center_x": .5, "top": 1}
+            text: "C u s t o m e r s"
+            halign: "center"
+            font_name: "LPoppins"
+            font_size: 20
+        MDBoxLayout:
+            #padding: 15
+            spacing: 10
+            #adaptive_height: True
+            orientation: 'vertical'
+            pos_hint: {"center_x": .5,"top": .9}
+            #md_bg_color: rgba(141, 241, 243, 255)
+
+            # Search Box Layout
+            MDBoxLayout:
+                padding: 16, 5, 16, 0
+                adaptive_height: True
+
+                # Search Box
+                MDBoxLayout:
+                    size_hint: 1, None
+                    height: 42
+                    radius: 4
+                    spacing: 6
+                    padding: 12, 2, 6, 0
+                    md_bg_color: 1, 1, 1, 1
+                    #md_bg_color: rgba(235, 235, 235, 255)
+                    #pos_hint: {"center_x":.5,"center_y": .6}
+                    canvas.before:
+                        Color:
+                            rgba: rgba(71, 92, 119, 30.6)
+                        Line:
+                            width: 1
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 12, 12, 12, 12, 100
+                    MDIcon:
+                        icon: 'magnify'
+                        adaptive_size: True
+                        theme_text_color: 'Custom'
+                        text_color: rgba(71,92,119,178.5)
+                        font_size: "20sp"
+                        pos_hint: {"center_x":.5,"center_y": .5}
+                        #md_bg_color: rgba(122, 222, 122, 255)
+                    TextInput:
+                        id: search_customer
+                        hint_text: "Select Serial"
+                        hint_text_color: rgba(206, 206,206, 255)
+                        font_name: "MPoppins"
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1,1,1,0
+                        padding: 0,9
+                        foreground_color: rgba(71, 92, 119, 255)
+                        #on_text: root.search_usim_by_serial(search_usim.text)
+                        on_text_validate: root.search_customer_by_name(search_customer.text)
+                        #on_text_validate: root.search(search_text.text)
+
+            # Customer List
+            MDBoxLayout:
+                id: container
+                ScrollView:
+                    padding: 5
+                    MDList:
+                        id: customer_list
+                        size_hint: 1, None
+                        adaptive_height: True
+                        #md_bg_color: rgba(206, 206, 209, 255)
+                        CustomerCard:
+                        CustomerCard:
+                        CustomerCard:
+                        CustomerCard:
+                        CustomerCard:
+                        CustomerCard:
+                        CustomerCard:
+                        CustomerCard:
+                        CustomerCard:
+                        CustomerCard:
+                        CustomerCard:
+                        CustomerCard:
+            Widget:
+                size_hint: 1, None
+                height: 50
+        DGFAB:
+            size_hint: None, None
+            width: 40
+            height: 40
+            radius: 20
+            padding: 8
+            elevation: 5
+            md_bg_color: rgba(255, 255, 255, 245)
+            pos: screen_box.right - self.width -16, screen_box.y + 16
+            #pos_hint: {"right": right -16,"y": right -16}
+            #user_font_size: "27sp"
+            on_release:
+                root.manager.current = "add_customer"
+            MDIcon:
+                icon: 'plus'
+
+
+
+# Product Summary Screen and Widgets
+<SummaryIcon1>:
+    elevation: 2
+    #md_bg_color: rgba(255, 255, 255, 255)
+    #md_bg_color: rgba(222, 222, 222, 100)
+    #size_hint: None, None
+    #width: 90
+    #height: 110
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, .12
+        Line:
+            width: 1
+            rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+    MDFloatLayout:
+        spacing: 5
+        padding: 5
+        pos_hint: {"center_x": .5 , "center_y": .5}
+        #md_bg_color: rgba(105, 222, 222, 255)
+        MDBoxLayout:
+            orientation: 'vertical'
+            adaptive_size: True
+            spacing: 5
+            pos_hint: {"center_x": .5 , "center_y": .5}
+            MDFloatLayout:
+                id: icon_box
+                size_hint: None, None
+                size: '56dp', '56dp'
+                radius: 28
+                md_bg_color: rgba(245, 245, 245, 255)
+                pos_hint: {"center_x": .5,"center_y": .5}
+                Image:
+                    source: root.source
+                    size_hint: .85, .85
+                    #radius: [28, ]
+                    pos_hint: {"center_x": .5,"center_y": .5}
+                MDBoxLayout:
+                    size_hint: None, None
+                    size: '23dp', '23dp'
+                    radius: 46
+                    padding: 2
+                    md_bg_color: rgba(255, 255, 255, 255)
+                    pos_hint: {"center_x": .85,"center_y": .83}
+                    MDBoxLayout:
+                        size_hint: None, None
+                        size: '20dp', '20dp'
+                        radius: 40
+                        padding: 2
+                        md_bg_color: rgba(71, 92, 119, 35)
+                        pos_hint: {"center_x": .5,"center_y": .5}
+                        MDLabel:
+                            text: root.no
+                            font_name: "ENanum"
+                            font_size: 10.5
+                            halign: 'center'
+                            #pos_hint: {"center_x": .5,"center_y": .5}
+            MDLabel:
+                text: root.text
+                font_name: "BNanum"
+                font_size: 10
+                halign: 'center'
+                adaptive_height: True
+
+
+<ProductSummaryScreen>:
+    name: 'product_summary'
+    on_enter:
+        root.get_product_summary()
+    MDFloatLayout:
+        #md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"top": 1}
+            on_release:
+                root.manager.transition.direction = "right"
+                root.manager.current = "main"
+        MDLabel:
+            md_bg_color: rgba(206, 206, 209, 20)
+            size_hint: 1, None
+            height: 50
+            pos_hint: {"center_x": .5, "top": 1}
+            text: "S u m m a r y"
+            halign: "center"
+            font_name: "LPoppins"
+            font_size: 20
+        MDBoxLayout:
+            spacing: 5
+            padding: 16
+            orientation: 'vertical'
+            size_hint_y: .9
+            pos_hint: {"center_x": .5, "top": .9}
+            #md_bg_color: rgba(206, 206, 209, 255)
+            ScrollView:
+                do_scroll_x: False
+                do_scroll_y: True
+                size_hint: 1, 1
+                pos_hint: {"center_x": .5,"center_y": .5}
+                GridLayout:
+                    id: summary_grid
+                    cols: 3
+                    spacing: 10
+                    #padding: 10
+                    row_force_default: True
+                    row_default_height: '110dp'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    SummaryIcon1:
+                        id: p20
+                        text: 'P20'
+                        source: 'P20.ico'
+                    SummaryIcon1:
+                        id: p30
+                        text: 'P30'
+                        source: 'P30.ico'
+                    SummaryIcon1:
+                        id: xp20
+                        text: 'XP20'
+                        source: 'XP2020.ico'
+                    SummaryIcon1:
+                        id: xmission
+                        text: 'Xmission'
+                        source: 'xmission.ico'
+                    SummaryIcon1:
+                        id: p20battery
+                        text: 'P20 Battery'
+                        source: 'xpbattery.ico'
+                    SummaryIcon1:
+                        id: p30battery
+                        text: 'P30 Battery'
+                        source: 'xpbattery.ico'
+                    SummaryIcon1:
+                        id: xp20battery
+                        text: 'XP20 Battery'
+                        source: 'xpbattery.ico'
+                    SummaryIcon1:
+                        id: xmbattery
+                        text: 'Xmission Battery'
+                        source: 'xpbattery.ico'
+                    SummaryIcon1:
+                        id: p20
+                        text: 'P20'
+                        source: 'P20.ico'
+                    SummaryIcon1:
+                        id: p30
+                        text: 'P30'
+                        source: 'P30.ico'
+                    SummaryIcon1:
+                        id: xp20
+                        text: 'XP20'
+                        source: 'XP2020.ico'
+                    SummaryIcon1:
+                        id: xmission
+                        text: 'Xmission'
+                        source: 'xmission.ico'
+                    SummaryIcon1:
+                        id: p20battery
+                        text: 'P20 Battery'
+                        source: 'xpbattery.ico'
+                    SummaryIcon1:
+                        id: p30battery
+                        text: 'P30 Battery'
+                        source: 'xpbattery.ico'
+                    SummaryIcon1:
+                        id: xp20battery
+                        text: 'XP20 Battery'
+                        source: 'xpbattery.ico'
+                    SummaryIcon1:
+                        id: xmbattery
+                        text: 'Xmission Battery'
+                        source: 'xpbattery.ico'
+                    SummaryIcon1:
+                        id: xp20battery
+                        text: 'XP20 Battery'
+                        source: 'xpbattery.ico'
+                    SummaryIcon1:
+                        id: xmbattery
+                        text: 'Xmission Battery'
+                        source: 'xpbattery.ico'
+
+# Rentals Screen Widgets
+<MyTextField>
+    orientation: 'vertical'
+    size_hint: 1, None
+    #height: 48
+    adaptive_height: True
+    #pos_hint: {"center_x":.5, "center_y":.5}
+    #md_bg_color: rgba(106, 206, 209, 20)
+    MDFloatLayout:
+        size_hint: 1, None
+        height: 48
+        md_bg_color: 1, 1, 1, 1
+        radius: [10]
+        padding: 10
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, .12
+            Line:
+                width: 1
+                rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+        MDBoxLayout:
+            padding: 4, 0, 4, 0
+            adaptive_size: True
+            radius: 3
+            pos: textbox.x + 16, textbox.y + textbox.height - self.height/2
+            md_bg_color: 1, 1, 1, 1
+            MDLabel:
+                text: root.title
+                font_name: "MPoppins"
+                font_size: 12
+                adaptive_size: True
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, .6
+                pos_hint: {"center_x":.5,"center_y":.5}
+        TextInput:
+            id: textbox
+            hint_text: root.hint_text
+            hint_text_color: rgba(206, 206,206, 255)
+            pos_hint: {"center_x":.5, "center_y":.5}
+            height: self.minimum_height
+            cursor_color: rgba(206, 206,206, 255)
+            cursor_width: "2sp"
+            multiline: False
+            background_color: 1,1,1,0
+            foreground_color: 0, 0, 0, .7
+            #foreground_color: rgba(71, 92, 119, 255)
+            padding: 16, 14, 12, 10
+            font_name: "MPoppins"
+            #on_text_validate: root.search_input(search_text.text)
+
+<DGTextField>
+    text: self.ids.textbox.text
+    orientation: 'vertical'
+    size_hint: 1, None
+    adaptive_height: True
+    #md_bg_color: rgba(106, 206, 209, 20)
+    spacing: 5
+    MDLabel:
+        text: root.title
+        font_name: "BNanum"
+        font_size: 12
+        adaptive_height: True
+        theme_text_color: "Custom"
+        text_color: 0, 0, 0, .6
+        halign: 'left'
+        #pos_hint: {"center_x":.5, "center_y":.5}
+        #pos: textbox.x + 4, textbox.y + textbox.height + 5
+    MDBoxLayout:
+        size_hint: 1, None
+        height: 42
+        radius: 4
+        spacing: 6
+        padding: 12, 2, 6, 0
+        md_bg_color: 1, 1, 1, 1
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, .12
+            Line:
+                width: 1
+                rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+        TextInput:
+            id: textbox
+            hint_text: root.hint_text
+            hint_text_color: rgba(206, 206,206, 255)
+            pos_hint: {"center_x":.5, "center_y":.5}
+            height: self.minimum_height
+            cursor_color: rgba(206, 206,206, 255)
+            cursor_width: "2sp"
+            multiline: False
+            background_color: 1,1,1,0
+            foreground_color: 0, 0, 0, .7
+            #foreground_color: rgba(71, 92, 119, 255)
+            padding: 0,9
+            font_name: "BNanum"
+            #on_text_validate: root.search_input(search_text.text)
+
+<DGIconTextField>
+    orientation: 'vertical'
+    size_hint: .9, None
+    adaptive_height: True
+    #md_bg_color: rgba(106, 206, 209, 20)
+    spacing: 5
+    pos_hint: root.pos_hint
+    MDLabel:
+        text: root.title
+        font_name: "BNanum"
+        font_size: 12
+        adaptive_height: True
+        theme_text_color: "Custom"
+        text_color: 0, 0, 0, .6
+        halign: 'left'
+        #pos_hint: {"center_x":.5, "center_y":.5}
+        #pos: box.x + 10, box.y + box.height + 5
+    MDBoxLayout:
+        id: box
+        size_hint: 1, None
+        height: 48
+        radius: 4
+        spacing: 6
+        padding: 12, 5, 6, 5
+        md_bg_color: 1, 1, 1, 1
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, .12
+            Line:
+                width: 1
+                rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+        TextInput:
+            id: icontextbox
+            hint_text: root.hint_text
+            hint_text_color: rgba(206, 206,206, 255)
+            font_name: "BNanum"
+            pos_hint: {"center_x":.5, "center_y":.5}
+            height: self.minimum_height
+            cursor_color: rgba(206, 206,206, 255)
+            cursor_width: "2sp"
+            multiline: False
+            background_color: 1,1,1,0
+            foreground_color: 0, 0, 0, .7 #text color
+            padding: 5,9
+            #foreground_color: rgba(71, 92, 119, 255)
+            #on_text_validate: root.search_input(search_text.text)
+        MDBoxLayout:
+            adaptive_width: True
+            MDBoxLayout:
+                md_bg_color: rgba(235, 235, 235, 255)
+                size_hint: None, None
+                width: 1.5
+                height: 40
+                pos_hint: {"center_x":.5,"center_y": .5}
+            MDIconButton:
+                icon: root.icon
+                adaptive_size: True
+                theme_text_color: 'Custom'
+                text_color: rgba(71,92,119,178.5)
+                font_size: "20sp"
+                pos_hint: {"center_x":.5,"center_y": .5}
+                #md_bg_color: rgba(122, 222, 122, 255)
+                on_release: root.on_release
+
+
+<RentalsScreen>
+    name: 'rentals'
+    md_bg_color: 1, 1, 1, 1
+    Carousel:
+        id: carousel
+        on_current_slide: root.current_slide(self.index)
+        # Select Date and Customer
+        MDFloatLayout:
+            padding: 15
+            orientation: 'vertical'
+            #md_bg_color: rgba(241, 241, 243, 255)
+            MDLabel:
+                size_hint: 1, None
+                height: 50
+                pos_hint: {"center_x": .5, "top": 1}
+                text: "N e w  R e n t a l"
+                halign: "center"
+                font_name: "LPoppins"
+                font_size: 20
+            MDGridLayout:
+                rows: 6
+                padding: 15
+                spacing: 25
+                adaptive_height: True
+                pos_hint: {"center_x": .5,"top": .9}
+
+                # Select Date
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint: .9, None
+                    adaptive_height: True
+                    #md_bg_color: rgba(106, 206, 209, 20)
+                    spacing: 5
+                    MDLabel:
+                        text: 'Select Date'
+                        font_name: "MPoppins"
+                        font_size: 12
+                        adaptive_height: True
+                        #theme_text_color: "Custom"
+                        #text_color: 0, 0, 0, .6
+                        color: rgba(0, 0, 0, 178.5) # use just color or theme_text_color + text color for  label text
+                        halign: 'left'
+                        #pos_hint: {"center_x":.5, "center_y":.5}
+                        #md_bg_color: rgba(106, 206, 209, 120)
+                        #pos: icontextbox.x + 4, icontextbox.y + icontextbox.height + 5
+                    ImageButton:
+                        size_hint: 1, None
+                        height: 48
+                        radius: 4
+                        spacing: 6
+                        padding: 15, 5, 6, 5
+                        md_bg_color: 1, 1, 1, 1
+                        #md_bg_color: rgba(235, 235, 235, 255)
+                        ripple_scale: .2
+                        on_release:
+                            root.show_date_picker()
+                        canvas.before:
+                            Color:
+                                rgba: 0, 0, 0, .12
+                            Line:
+                                width: 1
+                                rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                        MDLabel:
+                            id: date
+                            text: '2022.04.26'
+                            font_name: "MPoppins"
+                            font_size: 15
+                            color: rgba(0, 0, 0, 178.5)
+                            size_hint: 1, None
+                            adaptive_height: True
+                            pos_hint: {"center_x":.5,"center_y": .5}
+
+                        MDBoxLayout:
+                            adaptive_width: True
+                            MDBoxLayout:
+                                md_bg_color: rgba(235, 235, 235, 255)
+                                size_hint: None, None
+                                width: 1.5
+                                height: 40
+                                pos_hint: {"center_x":.5,"center_y": .5}
+                            MDIconButton:
+                                icon: 'calendar-edit'
+                                adaptive_size: True
+                                font_size: "20sp"
+                                theme_text_color: 'Custom'
+                                text_color: rgba(71,92,119,178.5)
+                                pos_hint: {"center_x":.5,"center_y": .5}
+                                #md_bg_color: rgba(122, 222, 122, 255)
+                                on_release:
+                                    root.manager.current = 'main'
+
+                # Select Customer
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint: .9, None
+                    adaptive_height: True
+                    #md_bg_color: rgba(106, 206, 209, 20)
+                    spacing: 5
+                    MDLabel:
+                        text: 'Select Customer'
+                        font_name: "MPoppins"
+                        font_size: 12
+                        adaptive_height: True
+                        #theme_text_color: "Custom"
+                        #text_color: 0, 0, 0, .6
+                        color: rgba(0, 0, 0, 178.5) # use just color or theme_text_color + text color for  label text
+                        halign: 'left'
+                        #md_bg_color: rgba(106, 206, 209, 120)
+                    MDBoxLayout:
+                        size_hint: 1, None
+                        height: 48
+                        radius: 4
+                        spacing: 6
+                        padding: 12, 5, 6, 5
+                        md_bg_color: 1, 1, 1, 1
+                        #md_bg_color: rgba(235, 235, 235, 255)
+                        #pos_hint: {"center_x":.5,"center_y": .6}
+                        canvas.before:
+                            Color:
+                                rgba: rgba(71, 92, 119, 30.6)
+                            Line:
+                                width: 1
+                                rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                        TextInput:
+                            id: search_org
+                            hint_text: "Select Customer"
+                            hint_text_color: rgba(206, 206,206, 255)
+                            font_name: "MPoppins"
+                            pos_hint: {"center_x":.5, "center_y":.5}
+                            height: self.minimum_height
+                            cursor_color: rgba(206, 206,206, 255)
+                            cursor_width: "2sp"
+                            multiline: False
+                            background_color: 1,1,1,0
+                            padding: 5,9
+                            foreground_color: rgba(71, 92, 119, 255)
+                            #on_text_validate: root.search_input(search_text.text)
+                        MDBoxLayout:
+                            adaptive_width: True
+                            MDBoxLayout:
+                                md_bg_color: rgba(235, 235, 235, 255)
+                                size_hint: None, None
+                                width: 1.5
+                                height: 40
+                                pos_hint: {"center_x":.5,"center_y": .5}
+                            MDIconButton:
+                                icon: 'chevron-down'
+                                adaptive_size: True
+                                theme_text_color: 'Custom'
+                                text_color: rgba(71,92,119,178.5)
+                                font_size: "20sp"
+                                pos_hint: {"center_x":.5,"center_y": .5}
+                                #md_bg_color: rgba(122, 222, 122, 255)
+                                on_release:
+                                    root.manager.current = 'main'
+
+                MDLabel:
+                    text: 'or'
+                    halign: 'center'
+                    font_name: 'MPoppins'
+                    font_size: 14
+                    pos_hint: {"center_x":.5,"center_y": .5}
+
+
+                ImageButton:
+                    size_hint: .9, None
+                    height: 48
+                    radius: 12
+                    padding: 24
+                    spacing: 24
+                    md_bg_color: rgba(235, 235, 235, 255)
+                    pos_hint: {"center_x":.5,"center_y": .4}
+                    MDIcon:
+                        icon: 'plus'
+                        adaptive_size: True
+                        pos_hint: {"center_x":.5,"center_y": .5}
+                        theme_text_color: "Custom"
+                        text_color: 0, 0, 0, .7
+                        #md_bg_color: rgba(222, 122, 222, 255)
+                    MDLabel:
+                        text: 'Create New Customer'
+                        font_name: 'MPoppins'
+                        font_size: 14
+                        halign: 'center'
+                        adaptive_size: True
+                        theme_text_color: "Custom"
+                        text_color: 0, 0, 0, .7
+                        #md_bg_color: rgba(122, 222, 122, 255)
+                        pos_hint: {"center_x":.5,"center_y": .5}
+
+            Button:
+                text: "Next"
+                size_hint: .9, None
+                height: 48
+                pos_hint: {"center_x": .5,"center_y": .08}
+                background_color: 0, 0, 0, 0
+                font_name: "MPoppins"
+                font_size: "18sp"
+                color: 1, 1, 1, 1
+                on_release:
+                    #root.manager.current = "product_details"
+                    #root.add_new_product(serial.text, name.text, year.text, version.text, category.text, entry_date.text, owner.text, user.text, status.text)
+                    #root.clr_txt()
+                    #root.show_details()
+                canvas.before:
+                    Color:
+                        rgb: rgba(71,92,119,205)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [12]
+
+
+        # Add New Customer Page
+        MDFloatLayout:
+            #md_bg_color: rgba(241, 241, 243, 255)
+            MDIconButton:
+                icon: 'chevron-left'
+                pos_hint: {"top": 1}
+                on_release:
+                    #root.release_cam()
+                    root.manager.current = "main"
+            MDLabel:
+                md_bg_color: rgba(206, 206, 209, 20)
+                size_hint: 1, None
+                height: 50
+                pos_hint: {"center_x": .5, "top": 1}
+                text: "A d d  C u s t o m e r"
+                halign: "center"
+                font_name: "BPoppins"
+                font_size: 20
+            MDGridLayout:
+                rows: 4
+                padding: 15
+                spacing: 25
+                adaptive_height: True
+                pos_hint: {"center_x": .5,"top": .9}
+                DGTextField:
+                    title: 'Organization Name'
+                    hint_text: 'ToppField'
+                MyTextField:
+                    title: 'Staff Name'
+                    #hint_text: 'Dogara'
+                MyTextField:
+                    title: 'Phone Number'
+                    hint_text: '01012345678'
+                MyTextField:
+                    title: 'Email'
+                    #hint_text: 'staff@company.com'
+
+            Button:
+                text: "Next"
+                size_hint: .9, None
+                height: 48
+                pos_hint: {"center_x": .5,"center_y": .08}
+                background_color: 0, 0, 0, 0
+                font_name: "MPoppins"
+                font_size: "18sp"
+                color: 1, 1, 1, 1
+                on_release:
+                    #root.manager.current = "product_details"
+                    #root.add_new_product(serial.text, name.text, year.text, version.text, category.text, entry_date.text, owner.text, user.text, status.text)
+                    #root.clr_txt()
+                    #root.show_details()
+                canvas.before:
+                    Color:
+                        rgb: rgba(71,92,119,205)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [12]
+
+
+
+
+        # Scan Page
+        MDFloatLayout:
+            md_bg_color: rgba(241, 241, 243, 255)
+            MDIconButton:
+                icon: 'chevron-left'
+                pos_hint: {"top": 1}
+                on_release:
+                    #root.release_cam()
+                    root.manager.current = "main"
+            MDLabel:
+                md_bg_color: rgba(206, 206, 209, 20)
+                size_hint: 1, None
+                height: 50
+                pos_hint: {"center_x": .5, "top": 1}
+                text: "S c a n"
+                halign: "center"
+                font_name: "BPoppins"
+                font_size: 20
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                padding: 15, 5
+                spacing: 15
+                size_hint: 1, None
+                #width: 310
+                adaptive_height: True
+                pos_hint: {"center_x": .5,"top": .9}
+                #md_bg_color: rgba(141, 241, 243, 255)
+
+                # Camera Widget
+                MDBoxLayout:
+                    id: cam_box
+                    md_bg_color: rgba(235, 235, 235, 255)
+                    #size_hint: .77, .41
+                    size_hint: None, None
+                    height: '220dp'
+                    width: '235dp'
+                    #height: '168dp'
+                    #width: '224dp'
+                    radius: 12
+                    pos_hint: {"center_x": .5}
+
+                # Enter Serial Manually
+                MDBoxLayout:
+                    size_hint: 1, None
+                    height: 48
+                    radius: 4
+                    spacing: 6
+                    padding: 12, 5, 6, 5
+                    md_bg_color: rgba(235, 235, 235, 255)
+                    pos_hint: {"center_x":.5,"center_y": .6}
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, .12
+                        Line:
+                            width: 1
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                    TextInput:
+                        id: manual_serial
+                        hint_text: "Enter Serial"
+                        valign: 'center'
+                        hint_text_color: rgba(206, 206,206, 255)
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        padding: 5,9
+                        background_color: 1,1,1,0
+                        foreground_color: rgba(71, 92, 119, 255)
+                        font_name: "MPoppins"
+                        on_text_validate: root.add_manually(manual_serial.text)
+                    MDIconButton:
+                        icon: 'plus'
+                        adaptive_size: True
+                        theme_text_color: 'Custom'
+                        text_color: rgba(71,92,119,178.5)
+                        font_size: "20sp"
+                        pos_hint: {"center_x":.5,"center_y": .5}
+                        #md_bg_color: rgba(122, 222, 122, 255)
+                        on_release:
+                            root.add_manually(search_org.text)
+
+                # Space for StackLayout
+
+                # Space for ListView
+                ScrollView:
+                    id: add_container
+                    pos_hint: {"center_x": .5}
+                    size_hint: 1, None
+                    height: 140
+                    MDList:
+                        id: add_scan_list
+                        radius: 12
+                        padding: 0
+                        #md_bg_color: rgba(206, 206, 209, 255)
+
+            Button:
+                text: "ADD ITEMS"
+                size_hint: .9, None
+                height: 48
+                pos_hint: {"center_x": .5,"center_y": .07}
+                background_color: 0, 0, 0, 0
+                font_name: "MPoppins"
+                font_size: "18sp"
+                color: 1, 1, 1, 1
+                on_release:
+                    #root.manager.current = "lend"
+                    root.scan()
+                    #root.release_cam()
+                canvas.before:
+                    Color:
+                        rgb: rgba(71,92,119,205)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [12]
+
+
+
+<ScanListItem>
+    id: list_item
+    padding: 8, 0, 8, 0
+    #spacing: 16
+    size_hint: 1, None
+    height: 48
+    radius: 5
+    #md_bg_color: rgba(249, 249, 249, 80)
+    #on_release: print(self.text)
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDBoxLayout:
+            spacing: 16
+            MDBoxLayout:
+                padding: 0
+                size_hint: None, None
+                width: 40
+                height: 40
+                pos_hint: {"center_y": .5}
+                #md_bg_color: rgba(169, 50, 38, 80)
+                Image:
+                    source: root.source
+                    size_hint:.7, .7
+                    #adaptive_size: True
+                    pos_hint: {"center_x":.5,"center_y": .5}
+
+            MDBoxLayout:
+                pos_hint: {"center_x":.5,"center_y": .5}
+                MDLabel:
+                    text: root.text
+                    font_name: "MPoppins"
+                    font_size: 14
+                    halign: "left"
+                    adaptive_height:True
+                    pos_hint: {"center_x":.5,"center_y": .5}
+                    #md_bg_color: rgba(255, 170, 23, 255)
+                MDIconButton:
+                    icon: root.icon
+                    user_font_size: "20sp"
+                    adaptive_size: True
+                    pos_hint: {"center_x":.5,"center_y": .5}
+                    on_release:
+                        root.delete_item(list_item)
+        MDBoxLayout:
+            adaptive_height: True
+            pos_hint: {"center_x": .5, "center_y": 0}
+            MDSeparator:
+
+<ProductChip>
+    padding: 10, 0, 0, 0
+    spacing: 0
+    radius: 10
+    elevation: 5
+    size_hint: None, None
+    adaptive_width: True
+    height: 25
+    md_bg_color: rgba(249, 249, 249, 80)
+    MDLabel:
+        text: root.text
+        font_name: "MPoppins"
+        font_size: 10
+        adaptive_size: True
+        pos_hint: {"center_x":.5,"center_y": .5}
+    MDIconButton:
+        icon: root.icon
+        user_font_size: "14sp"
+        adaptive_size: True
+        pos_hint: {"center_x":.5,"center_y": .5}
+
+<AccountListItem>:
+    padding: 16, 0, 16, 0
+    spacing: 16
+    size_hint: 1, None
+    height: 56
+    radius: 5
+    #md_bg_color: rgba(249, 249, 249, 80)
+    on_release:
+        print(self.text)
+    MDBoxLayout:
+        padding: 0
+        size_hint: None, None
+        width: 40
+        height: 40
+        pos_hint: {"center_y": .5}
+        #md_bg_color: rgba(169, 50, 38, 80)
+        Image:
+            source: root.source
+            size_hint:.7, .7
+            #adaptive_size: True
+            #pos_hint: {"center_x": .12, "center_y": .5}
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDBoxLayout:
+            MDLabel:
+                text: root.text
+                font_name: "MPoppins"
+                font_size: 12
+                halign: "right"
+                adaptive_size:True
+                pos_hint: {"center_x":.5,"center_y": .5}
+                #md_bg_color: rgba(255, 170, 23, 255)
+
+        MDBoxLayout:
+            adaptive_height: True
+            pos_hint: {"center_x": .5, "center_y": 0}
+            MDSeparator:
+
+<HomeIcon>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: 5
+        padding: 10
+        pos_hint: {"center_x": .5 , "center_y": .5}
+        #md_bg_color: rgba(105, 222, 222, 255)
+        MDFloatLayout:
+            id: icon_box
+            size_hint: None, None
+            size: '56dp', '56dp'
+            radius: 28
+            md_bg_color: rgba(245, 245, 245, 255)
+            pos_hint: {"center_x": .5,"center_y": .5}
+            Image:
+                source: root.source
+                size_hint: .85, .85
+                #radius: [28, ]
+                pos_hint: {"center_x": .5,"center_y": .5}
+        MDLabel:
+            text: root.text
+            font_name: 'MNoto'
+            font_size: 10
+            halign: 'center'
+            adaptive_height: True
+
+<CreateButton>:
+    size_hint: None, None
+    width: 110
+    height: 110
+    radius: [12]
+    spacing: 5
+    padding: 5
+    elevation: 10
+    md_bg_color: rgba(255, 255, 255, 255)
+    pos_hint: {"center_x": .5 , "center_y": .5}
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: 5
+        padding: 5
+        adaptive_height: True
+        pos_hint: {"center_x": 1 , "center_y": .5}
+        #md_bg_color: rgba(105, 222, 222, 50)
+        MDFloatLayout:
+            id: icon_box
+            size_hint: None, None
+            size: '56dp', '56dp'
+            radius: 28
+            md_bg_color: rgba(245, 245, 245, 0)
+            pos_hint: {"center_x": .5,"center_y": .5}
+            Image:
+                source: root.source
+                size_hint: .85, .85
+                pos_hint: {"center_x": .5,"center_y": .5}
+        MDLabel:
+            text: root.text
+            font_name: "MPoppins"
+            font_size: 10
+            halign: 'center'
+            adaptive_height: True
+
+<SummaryIcon>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: 5
+        padding: 5
+        #size_hint: None, None
+        #width: 100
+        #height: 100
+        #adaptive_height: True
+        pos_hint: {"center_x": .5 , "center_y": .5}
+        #md_bg_color: rgba(105, 222, 222, 255)
+        MDFloatLayout:
+            id: icon_box
+            size_hint: None, None
+            size: '56dp', '56dp'
+            radius: 28
+            md_bg_color: rgba(245, 245, 245, 255)
+            pos_hint: {"center_x": .5,"center_y": .5}
+            Image:
+                source: root.source
+                size_hint: .85, .85
+                #radius: [28, ]
+                pos_hint: {"center_x": .5,"center_y": .5}
+            MDBoxLayout:
+                size_hint: None, None
+                adaptive_width: True
+                height: self.width
+                radius: 46
+                padding: 2
+                md_bg_color: rgba(255, 255, 255, 255)
+                pos_hint: {"center_x": .85,"center_y": .83}
+                MDBoxLayout:
+                    size_hint: None, None
+                    adaptive_width: True
+                    height: self.width
+                    radius: 40
+                    padding: 2
+                    md_bg_color: rgba(71, 92, 119, 35)
+                    pos_hint: {"center_x": .5,"center_y": .5}
+                    MDLabel:
+                        text: root.no
+                        font_name: "ENanum"
+                        font_size: 10
+                        halign: 'center'
+                        valign: 'center'
+                        adaptive_size: True
+                        pos_hint: {"center_x": .5,"center_y": .5}
+                        #md_bg_color: rgba(255, 155, 255, 255)
+        MDLabel:
+            text: root.text
+            font_name: "BNanum"
+            font_size: 10
+            halign: 'center'
+            adaptive_height: True
+
+
+<NavIconButton>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: 4
+        padding: 0, 13, 0, 10
+        pos_hint: {"center_x": .5 , "center_y": .5}
+        #md_bg_color: rgba(105, 222, 222, 255)
+        MDIcon:
+            id: icon
+            icon: root.icon
+            user_font_size: "30sp"
+            theme_text_color: "Custom"
+            text_color: root.text_color
+            halign: 'center'
+            pos_hint: {"center_x": .5 , "center_y": .5}
+        MDLabel:
+            text: root.text
+            font_name: "MPoppins"
+            font_size: 10
+            halign: 'center'
+            theme_text_color: "Custom"
+            text_color: root.text_color
+
+<ProductCard>:
+    padding: 16
+    spacing: 16
+    size_hint: 1, None
+    height: 72
+    radius: 5
+    #md_bg_color: rgba(249, 249, 249, 80)
+    on_release:
+    #print(self.serial)
+    MDBoxLayout:
+        padding: 0
+        size_hint: None, None
+        width: 40
+        height: 40
+        #md_bg_color: rgba(169, 50, 38, 80)
+        Image:
+            source: root.source
+            #size_hint: .85, .85
+            adaptive_size: True
+            pos_hint: {"center_x": .12, "center_y": .5}
+    MDBoxLayout:
+        orientation: 'vertical'
+        adaptive_width: True
+        spacing: 5
+        padding: 0, 5, 0, 5
+        #md_bg_color: rgba(50, 169, 38, 80)
+        MDLabel:
+            id: name_version
+            text: root.name_version
+            #text: f"{root.device_name}, {root.version}"
+            font_name: "RNanum"
+            font_size: 12
+            color: rgba(132, 140, 140, 255)
+            halign: "left"
+            adaptive_size:True
+            #pos_hint: {"x": .24, "center_y": .65}
+            #md_bg_color: rgba(255, 170, 23, 255)
+        MDLabel:
+            id: serial
+            text: root.serial
+            font_name: "BNanum"
+            font_size: 12
+            halign: "center"
+            adaptive_size:True
+            #pos_hint: {"x": .24, "center_y": .4}
+            #md_bg_color: rgba(255, 170, 23, 255)
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'top'
+        MDBoxLayout:
+            adaptive_size:True
+            #md_bg_color: rgba(38, 50, 169, 80)
+            Status:
+                id: status
+                status: root.status
+
+<RentalsListItem>:
+    padding: 16
+    spacing: 16
+    size_hint: 1, None
+    height: 72
+    radius: 5
+    #md_bg_color: rgba(249, 249, 249, 80)
+    on_release:
+        print(self.name)
+    MDBoxLayout:
+        padding: 0
+        size_hint: None, None
+        width: 40
+        height: 40
+        #md_bg_color: rgba(169, 50, 38, 80)
+        Image:
+            source: root.source
+            adaptive_size: True
+            pos_hint: {"center_x": .12, "center_y": .5}
+    MDBoxLayout:
+        orientation: 'vertical'
+        adaptive_size: True
+        #md_bg_color: rgba(50, 169, 38, 80)
+        MDLabel:
+            id: name
+            text: root.name
+            font_name: "MPoppins"
+            font_size: 14
+            halign: "left"
+            adaptive_size:True
+            #pos_hint: {"x": .24, "center_y": .65}
+            #md_bg_color: rgba(255, 170, 23, 255)
+        MDLabel:
+            id: rent_date
+            text: root.rent_date
+            font_name: "LPoppins"
+            font_size: 13
+            halign: "center"
+            adaptive_size:True
+            #pos_hint: {"x": .24, "center_y": .4}
+            #md_bg_color: rgba(255, 170, 23, 255)
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'top'
+        MDBoxLayout:
+            adaptive_size:True
+            #md_bg_color: rgba(38, 50, 169, 80)
+            MDLabel:
+                id: status
+                text: root.status
+                font_name: "LPoppins"
+                font_size: 11
+                theme_text_color: "Custom"
+                text_color: 0, .5, 0, 1
+                halign: "right"
+                adaptive_size:True
+                #pos_hint: {"x": .24, "center_y": .4}
+                #md_bg_color: rgba(255, 170, 23, 255)
+
+                canvas.before:
+                    Color:
+                        rgb: rgba(0, 128, 0, 255)
+                    Line:
+                        width: 1
+                        rounded_rectangle: self.x-5, self.y, self.width+10, self.height, 5, 5, 5, 5, 50
+
+<ItemCard>
+    padding: 5
+    size_hint_y: None
+    height: 20
+    #md_bg_color: rgba(169, 50, 38, 80)
+    MDLabel:
+        id: device_name2
+        text: root.device_name
+        #text: 'P30 Fast Charger'
+        font_name: "MPoppins"
+        font_size: 10
+        halign: "left"
+        adaptive_size:True
+        pos_hint: {"x": .04, "center_y": .5}
+        #md_bg_color: rgba(255, 170, 23, 255)
+    MDLabel:
+        id: serial_no2
+        text: root.serial_no
+        #text: '761304500011'
+        font_name: "MPoppins"
+        font_size: 10
+        halign: "center"
+        adaptive_size:True
+        pos_hint: {"center_x": .685, "center_y": .5}
+        #md_bg_color: rgba(255, 170, 23, 255)
+    MDIcon:
+        id: status
+        source: root.source
+        #source: 'ok2.png'
+        adaptive_size: True
+        font_size : dp(20)
+        pos_hint: {"center_x": .9, "center_y": .5}
+
+<InfoList>
+    padding: 5
+    size_hint_y: None
+    height: 48
+    #md_bg_color: rgba(169, 50, 38, 80)
+    MDLabel:
+        text: root.title
+        #text: 'P30 Fast Charger'
+        font_name: "MNoto"
+        font_size: 10
+        halign: "left"
+        adaptive_size:True
+        pos_hint: {"x": 0, "center_y": .5}
+        #md_bg_color: rgba(255, 170, 23, 255)
+    MDLabel:
+        text: root.content
+        #text: '761304500011'
+        font_name: "MNoto"
+        font_size: 12
+        halign: "right"
+        pos_hint: {"right": 1, "center_y": .5}
+        #adaptive_width:True
+        #pos_hint: {"center_x": .55, "center_y": .5}
+        #md_bg_color: rgba(255, 170, 23, 255)
+    MDBoxLayout:
+        adaptive_height: True
+        padding: 25, 0, 0, 0
+        pos_hint: {"center_x": .5, "center_y": 0}
+        MDSeparator:
+
+# Content for enter name dialog
+<Content>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: self.minimum_height
+
+    MDTextField:
+        hint_text: "Name"
+
+<DetailLabel@MDLabel>:
+    font_name: "LPoppins"
+    font_size: 11
+    size_hint_y: None
+    height: self.texture_size[1]
+
+<ProductDetailScreen>
+    on_enter: self.show_details()
+    name: 'product_details'
+    MDFloatLayout:
+        orientation: 'vertical'
+        md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"top": 1}
+            on_release:
+                root.manager.current = "main"
+                root.clr_txt()
+        MDIconButton:
+            icon: 'pencil'
+            user_font_size: "20sp"
+            pos_hint: {"right": 1, "top": 1}
+            on_release:
+                root.manager.current = "main"
+
+        MDGridLayout:
+            rows: 4
+            MDBoxLayout:
+                size_hint: 1, .45
+                #pos_hint: {"center_x": .5,"top": 1}
+                #md_bg_color: rgba(106, 206, 209, 20)
+                Image:
+                    size_hint: .85, .85
+                    source: 'xpbattery.ico'
+                    pos_hint: {"center_x": .5,"center_y": .43}
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: 1, .2
+                padding:5, 0, 0, 10
+                spacing: 1
+                adaptive_height: True
+                #md_bg_color: rgba(206, 106, 209, 20)
+                #pos_hint: {"center_x": .5,"top": .5}
+                MDLabel:
+                    id: show_name_version
+                    text: 'XP20, CN'
+                    #text: root.show_name_version
+                    font_name: "LPoppins"
+                    font_size: 14
+                    halign: "center"
+                    adaptive_height: True
+
+                MDLabel:
+                    id: show_serial
+                    text: '1234567890'
+                    #text: root.show_serial
+                    font_name: "MPoppins"
+                    font_size: 14
+                    halign: "center"
+                    adaptive_height: True
+
+                MDLabel:
+                    id: show_status
+                    text: 'inUse'
+                    #text: root.show_status
+                    font_name: "LPoppins"
+                    font_size: 14
+                    halign: "center"
+                    #theme_text_color: "Custom"
+                    #text_color: 0, .5, 0, 1
+                    color:
+                        rgba(52, 88, 128, 255) if show_status.text == 'NEW' \
+                        else rgba(68, 107, 17, 255) if show_status.text == 'inUse' \
+                        else rgba(174, 175, 179, 255) if show_status.text == 'Burrowed' \
+                        else rgba(130, 109, 60, 255) if show_status.text == 'Sold' \
+                        else rgba(118, 44, 42, 255) if show_status.text == 'Damaged' \
+                        else rgba(0, 0, 0, 178.5)
+                    adaptive_height: True
+
+            MDBoxLayout:
+                adaptive_height: True
+                padding: 20, 0, 20, 0
+                MDSeparator:
+
+            MDGridLayout:
+                padding: 16
+                rows: 6
+                InfoList:
+                    id: show_owner
+                    title: 'Owner'
+                    content: "DRI"
+                    #content: root.show_owner
+                InfoList:
+                    id: show_user
+                    title: 'User'
+                    content: "DRI"
+                    #content: root.show_user
+                InfoList:
+                    id: show_entry_date
+                    title: 'Entry Date'
+                    content: '2020.05.12'
+                    #content: root.show_entry_date
+                InfoList:
+                    id: show_date_of_use
+                    title: 'Date of Use'
+                    content: '2020.04.30'
+                    #content: '2020.04.30'
+                InfoList:
+                    id: show_category
+                    title: 'Category'
+                    content: "Spray Drone"
+                    #content: root.show_category
+                InfoList:
+                    id: show_release_year
+                    title: 'Year of Release'
+                    content: "2020"
+                    #content: root.show_release_year
+
+        #ScrollView:
+            #pos_hint: {"center_x": .5, "top": .88}
+
+
+<AddProductScreenOld>:
+    name: 'add_product_old'
+    on_enter: root.date_today(self)
+    MDFloatLayout:
+        orientation: 'vertical'
+        md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"top": 1}
+            on_release:
+                root.manager.current = "main"
+        MDLabel:
+            text: "Add New Product"
+            font_name: "BPoppins"
+            font_size: 20
+            size_hint: 1, None
+            height: 50
+            halign: "center"
+            pos_hint: {"center_x": .5, "top": 1}
+            md_bg_color: rgba(206, 206, 209, 20)
+
+        ScrollView:
+            pos_hint: {"center_x": .5, "top": .88}
+            #Input Section
+            MDGridLayout:
+                rows: 9
+                padding: 10
+                spacing: 12
+                adaptive_height: True
+                #md_bg_color: rgba(156, 206, 209, 70)
+                #pos_hint: {"center_x": .5, "top": .88}
+
+                #Phone Input
+                MDLabel:
+                    text: 'Product Name'
+                    font_name: "MPoppins"
+                    font_size: 15
+                    md_bg_color: rgba(106, 206, 209, 70)
+                MDFloatLayout:
+                    size_hint: .5, None
+                    height: 42
+                    #pos_hint: {"center_x":.5, "center_y":.5}
+                    md_bg_color: rgba(235, 235, 235, 255)
+                    radius: [10]
+                    padding: 10
+                    TextInput:
+                        id: name
+                        hint_text: "XP 2020"
+                        hint_text_color: rgba(206, 206,206, 255)
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1,1,1,0
+                        foreground_color: rgba(71, 92, 119, 255)
+                        padding: 10
+                        font_name: "MPoppins"
+                        #on_text_validate: root.search_input(search_text.text)
+
+                #Serial/Version Grid
+                MDGridLayout:
+                    cols: 2
+                    rows:2
+                    adaptive_height: True
+                    spacing: 12
+
+                    # Serial/Version Labels
+                    MDLabel:
+                        text: 'Serial No.'
+                        font_name: "MPoppins"
+                        font_size: 15
+                        md_bg_color: rgba(156, 200, 209, 70)
+                        #size_hint: .1, .1
+                    MDLabel:
+                        text: 'Version'
+                        font_name: "MPoppins"
+                        font_size: 15
+                        md_bg_color: rgba(106, 200, 209, 70)
+                    # Name Input Bar
+                    MDFloatLayout:
+                        size_hint: None, None
+                        width: 150
+                        height: 42
+                        #pos_hint: {"center_x":.5, "center_y":.5}
+                        md_bg_color: rgba(235, 235, 235, 255)
+                        radius: [10]
+                        padding: 10
+                        TextInput:
+                            id: serial
+                            hint_text: "1234567890"
+                            hint_text_color: rgba(206, 206,206, 255)
+                            pos_hint: {"center_x":.5, "center_y":.5}
+                            height: self.minimum_height
+                            cursor_color: rgba(206, 206,206, 255)
+                            cursor_width: "2sp"
+                            multiline: False
+                            background_color: 1,1,1,0
+                            foreground_color: rgba(71, 92, 119, 255)
+                            padding: 10
+                            font_name: "MPoppins"
+                            #on_text_validate: root.search_input(search_text.text)
+
+                    #Version Bar
+                    MDFloatLayout:
+                        size_hint: None, None
+                        width: 125
+                        height: 42
+                        #pos_hint: {"center_x":.5, "center_y":.5}
+                        md_bg_color: rgba(235, 235, 235, 255)
+                        radius: [10]
+                        padding: 10
+                        TextInput:
+                            id: version
+                            hint_text: "CN"
+                            hint_text_color: rgba(206, 206,206, 255)
+                            pos_hint: {"center_x":.5, "center_y":.5}
+                            height: self.minimum_height
+                            cursor_color: rgba(206, 206,206, 255)
+                            cursor_width: "2sp"
+                            multiline: False
+                            background_color: 1,1,1,0
+                            foreground_color: rgba(71, 92, 119, 255)
+                            padding: 10
+                            font_name: "MPoppins"
+                            #on_text_validate: root.search_input(search_text.text)
+
+                # Category/Year Grid Labels
+                MDGridLayout:
+                    cols: 2
+                    rows:2
+                    adaptive_height: True
+                    spacing: 12
+                    # Category/Year Labels
+                    MDLabel:
+                        text: 'Category'
+                        font_name: "MPoppins"
+                        font_size: 15
+                        md_bg_color: rgba(156, 200, 209, 70)
+                        #size_hint: .1, .1
+                    MDLabel:
+                        text: 'Year of Release'
+                        font_name: "MPoppins"
+                        font_size: 15
+                        md_bg_color: rgba(106, 200, 209, 70)
+
+                    # Name Input Bar
+                    MDFloatLayout:
+                        size_hint: None, None
+                        width: 150
+                        height: 42
+                        #pos_hint: {"center_x":.5, "center_y":.5}
+                        md_bg_color: rgba(235, 235, 235, 255)
+                        radius: [10]
+                        padding: 10
+                        TextInput:
+                            id: category
+                            hint_text: "Spray Drone"
+                            hint_text_color: rgba(206, 206,206, 255)
+                            pos_hint: {"center_x":.5, "center_y":.5}
+                            height: self.minimum_height
+                            cursor_color: rgba(206, 206,206, 255)
+                            cursor_width: "2sp"
+                            multiline: False
+                            background_color: 1,1,1,0
+                            foreground_color: rgba(71, 92, 119, 255)
+                            padding: 10
+                            font_name: "MPoppins"
+                            #on_text_validate: root.search_input(search_text.text)
+
+                    #Year of Release Bar
+                    MDFloatLayout:
+                        size_hint: None, None
+                        width: 125
+                        height: 42
+                        #pos_hint: {"center_x":.5, "center_y":.5}
+                        md_bg_color: rgba(235, 235, 235, 255)
+                        radius: [10]
+                        padding: 10
+                        TextInput:
+                            id: year
+                            hint_text: "2020"
+                            hint_text_color: rgba(206, 206,206, 255)
+                            pos_hint: {"center_x":.5, "center_y":.5}
+                            height: self.minimum_height
+                            cursor_color: rgba(206, 206,206, 255)
+                            cursor_width: "2sp"
+                            multiline: False
+                            background_color: 1,1,1,0
+                            foreground_color: rgba(71, 92, 119, 255)
+                            padding: 10
+                            font_name: "MPoppins"
+                            #on_text_validate: root.search_input(search_text.text)
+
+                #Entry Date/Status Grid
+                MDGridLayout:
+                    cols: 2
+                    rows:2
+                    adaptive_height: True
+                    spacing: 12
+
+                    # Entry Date/Status Labels
+                    MDLabel:
+                        text: 'Status'
+                        font_name: "MPoppins"
+                        font_size: 15
+                        md_bg_color: rgba(156, 200, 209, 70)
+                        #size_hint: .1, .1
+                    MDLabel:
+                        text: 'Entry Date'
+                        font_name: "MPoppins"
+                        font_size: 15
+                        md_bg_color: rgba(106, 200, 209, 70)
+
+                    # Name Input Bar
+                    MDFloatLayout:
+                        size_hint: None, None
+                        width: 150
+                        height: 42
+                        #pos_hint: {"center_x":.5, "center_y":.5}
+                        md_bg_color: rgba(235, 235, 235, 255)
+                        radius: [10]
+                        padding: 10
+                        TextInput:
+                            id: status
+                            hint_text: "inStock"
+                            hint_text_color: rgba(206, 206,206, 255)
+                            pos_hint: {"center_x":.5, "center_y":.5}
+                            height: self.minimum_height
+                            cursor_color: rgba(206, 206,206, 255)
+                            cursor_width: "2sp"
+                            multiline: False
+                            background_color: 1,1,1,0
+                            foreground_color: rgba(71, 92, 119, 255)
+                            padding: 10
+                            font_name: "MPoppins"
+                            #on_text_validate: root.search_input(search_text.text)
+
+                    #Date Input Button
+                    ImageButton:
+                        size_hint: None, None
+                        width:125
+                        height: 42
+                        pos_hint: {"center_x":.5, "center_y":.17}
+                        md_bg_color: rgba(235, 235, 235, 255)
+                        radius: [10]
+                        padding: 10
+                        spacing: 5
+                        ripple_scale: .2
+                        on_release:
+                            root.show_date_picker()
+                            print("Working...")
+                        MDBoxLayout:
+                            size_hint: 1, 1
+                            padding: 5
+                            spacing: 5
+                            pos_hint: {"center_x":.5, "center_y":.5}
+                            #md_bg_color: rgba(92,71,119,45)
+                            MDLabel:
+                                id: entry_date
+                                text: "2021-12-28"
+                                halign: 'center'
+                                font_name: 'MPoppins'
+                                font_size: "15sp"
+                                pos_hint: {"center_x":.5, "center_y":.5}
+                                color: rgba(71,92,119,245)
+                            MDIcon:
+                                icon: 'calendar-edit'
+                                pos_hint: {"center_x":.5, "center_y":.5}
+                                adaptive_size: True
+                                theme_text_color: 'Custom'
+                                text_color: rgba(71,92,119,205)
+                                font_size: "20sp"
+
+                #Owner Input Label
+                MDLabel:
+                    text: 'Owner'
+                    font_name: "MPoppins"
+                    font_size: 15
+                    md_bg_color: rgba(156, 206, 200, 70)
+                MDFloatLayout:
+                    size_hint: .5, None
+                    height: 42
+                    #pos_hint: {"center_x":.5, "center_y":.5}
+                    md_bg_color: rgba(235, 235, 235, 255)
+                    radius: [10]
+                    padding: 10
+                    TextInput:
+                        id: owner
+                        hint_text: "ToppField"
+                        hint_text_color: rgba(206, 206,206, 255)
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1,1,1,0
+                        foreground_color: rgba(71, 92, 119, 255)
+                        padding: 10
+                        font_name: "MPoppins"
+                        #on_text_validate: root.search_input(search_text.text)
+
+                #User Input Label
+                MDLabel:
+                    text: 'User'
+                    font_name: "MPoppins"
+                    font_size: 15
+                    md_bg_color: rgba(156, 206, 200, 70)
+                MDFloatLayout:
+                    size_hint: .5, None
+                    height: 42
+                    #pos_hint: {"center_x":.5, "center_y":.5}
+                    md_bg_color: rgba(235, 235, 235, 255)
+                    radius: [10]
+                    padding: 10
+                    TextInput:
+                        id: user
+                        hint_text: "ToppField"
+                        hint_text_color: rgba(206, 206,206, 255)
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1,1,1,0
+                        foreground_color: rgba(71, 92, 119, 255)
+                        padding: 10
+                        font_name: "MPoppins"
+                        #on_text_validate: root.search_input(search_text.text)
+
+        Button:
+            text: "Confirm"
+            size_hint: .77, .08
+            pos_hint: {"center_x": .5,"center_y": .07}
+            background_color: 0, 0, 0, 0
+            font_name: "MPoppins"
+            font_size: "18sp"
+            color: 1, 1, 1, 1
+            on_release:
+                #root.manager.current = "product_details"
+                root.add_new_product(serial.text, name.text, year.text, version.text, category.text, entry_date.text, owner.text, user.text, status.text)
+                root.clr_txt()
+                #root.show_details()
+            canvas.before:
+                Color:
+                    rgb: rgba(255, 170, 23, 255)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [12]
+
+
+
+<AddProductScreen>:
+    name: 'add_product'
+    on_enter: root.date_today(self)
+    MDFloatLayout:
+        orientation: 'vertical'
+        #md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"top": 1}
+            on_release:
+                root.manager.transition.direction = "right"
+                root.manager.current = "main"
+        MDLabel:
+            text: "새 제품 등록"
+            font_name: "RNanum"
+            font_size: 20
+            size_hint: 1, None
+            height: 50
+            halign: "center"
+            pos_hint: {"center_x": .5, "top": 1}
+            md_bg_color: rgba(206, 206, 209, 20)
+
+        ScrollView:
+            size_hint: 1, .8
+            pos_hint: {"center_x": .5,"top": .9}
+            MDGridLayout:
+                rows: 9
+                padding: 16, 5, 15, 0
+                spacing: 10
+                adaptive_height: True
+                #md_bg_color: rgba(156, 206, 209, 70)
+
+                #Product Name Input Bar
+                DGTextField:
+                    id: name
+                    title: '제품명'
+                    #title: 'Product Name'
+                    hint_text: 'XP 2020'
+
+                #Serial/Version Input Grid
+                MDGridLayout:
+                    cols: 2
+                    adaptive_height: True
+                    spacing: 12
+
+                    # Serial/Version Labels
+                    DGTextField:
+                        id: serial
+                        title: '시리얼'
+                        #title: 'Serial No.'
+                        hint_text: "1234567890"
+                    DGTextField:
+                        id: version
+                        title: '버전'
+                        #title: 'Version'
+                        hint_text: "CN"
+                DGTextField:
+                    id: category
+                    title: '종류'
+                    #title: 'Category'
+                    hint_text: "방제 드론"
+
+                # Year/Status Grid Labels
+                MDGridLayout:
+                    cols: 2
+                    adaptive_height: True
+                    spacing: 12
+
+                    # Year/Status Labels
+                    DGTextField:
+                        id: year
+                        title: '출시 연도'
+                        #title: 'Release Year'
+                        hint_text: "2020"
+                    DGTextField:
+                        id: status
+                        title: '상태'
+                        #title: 'Status'
+                        hint_text: "사용중"
+
+
+                #Entry Date/Open Date Grid
+                MDGridLayout:
+                    cols: 2
+                    adaptive_height: True
+                    spacing: 12
+
+                    # Select Entry Date
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        size_hint: 1, None
+                        adaptive_height: True
+                        #md_bg_color: rgba(106, 206, 209, 20)
+                        spacing: 5
+                        MDLabel:
+                            text: '입고 날짜'
+                            #text: 'Entry Date'
+                            font_name: "RNanum"
+                            font_size: 12
+                            adaptive_height: True
+                            #theme_text_color: "Custom"
+                            #text_color: 0, 0, 0, .6
+                            color: rgba(0, 0, 0, 178.5) # use just color or theme_text_color + text color for  label text
+                            halign: 'left'
+                        ImageButton:
+                            size_hint: 1, None
+                            height: 42
+                            radius: 4
+                            spacing: 6
+                            #padding: 15, 5, 6, 5
+                            #padding: 12, 2, 6, 0
+                            md_bg_color: 1, 1, 1, 1
+                            on_release:
+                                root.show_entry_date_picker()
+                            canvas.before:
+                                Color:
+                                    rgba: 0, 0, 0, .12
+                                Line:
+                                    width: 1
+                                    rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                            MDLabel:
+                                id: entry_date
+                                text: "2021-12-28"
+                                font_name: "MPoppins"
+                                font_size: 15
+                                halign: 'center'
+                                color: rgba(206, 206,206, 255)
+                                #color: rgba(0, 0, 0, 178.5)
+                                size_hint: 1, None
+                                adaptive_height: True
+                                pos_hint: {"center_x":.5,"center_y": .5}
+
+                    # Select Open Date
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        size_hint: 1, None
+                        adaptive_height: True
+                        #md_bg_color: rgba(106, 206, 209, 20)
+                        spacing: 5
+                        MDLabel:
+                            text: '출고 날짜'
+                            #text: 'Opened by'
+                            font_name: "RNanum"
+                            font_size: 12
+                            adaptive_height: True
+                            #theme_text_color: "Custom"
+                            #text_color: 0, 0, 0, .6
+                            color: rgba(0, 0, 0, 178.5) # use just color or theme_text_color + text color for  label text
+                            halign: 'left'
+                        ImageButton:
+                            size_hint: 1, None
+                            height: 42
+                            radius: 4
+                            spacing: 6
+                            #padding: 15, 5, 6, 5
+                            #padding: 12, 2, 6, 0
+                            md_bg_color: 1, 1, 1, 1
+                            on_release:
+                                root.show_open_date_picker()
+                            canvas.before:
+                                Color:
+                                    rgba: 0, 0, 0, .12
+                                Line:
+                                    width: 1
+                                    rounded_rectangle: self.x, self.y, self.width, self.height, 4, 4, 4, 4, 100
+                            MDLabel:
+                                id: open_date
+                                text: "-"
+                                font_name: "RNanum"
+                                font_size: 15
+                                halign: 'center'
+                                color: rgba(206, 206,206, 255)
+                                #color: rgba(0, 0, 0, 178.5)
+                                size_hint: 1, None
+                                adaptive_height: True
+                                pos_hint: {"center_x":.5,"center_y": .5}
+
+                DGTextField:
+                    id: owner
+                    title: '소유자'
+                    #title: 'Owner'
+                    hint_text: "탑필드"
+                    focus_next: 'user'
+                DGTextField:
+                    id: user
+                    title: '사용자'
+                    #title: 'User'
+                    hint_text: "탑필드"
+                    focus_next: 'name'
+
+
+        MDBoxLayout:
+            adaptive_height: True
+            padding:16
+            pos_hint: {"center_x": .5,"y": 0}
+            #md_bg_color: rgba(122, 222, 122, 255)
+            Button:
+                text: "저장"
+                size_hint: .9, None
+                height: 42
+                #pos_hint: {"center_x": .5,"center_y": .08}
+                background_color: 0, 0, 0, 0
+                font_name: "BNanum"
+                font_size: "18sp"
+                color: 1, 1, 1, 1
+                on_release:
+                    root.add_new_product(serial.text, name.text, year.text, version.text, category.text, entry_date.text, owner.text, user.text, status.text)
+                    root.clr_txt()
+                canvas.before:
+                    Color:
+                        rgb: rgba(71,92,119,205)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [4]
+
+<RentDetailsScreen>:
+    name: 'rent_details'
+    MDFloatLayout:
+        orientation: 'vertical'
+        md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"top": 1}
+            on_release:
+                #root.release_cam()
+                root.manager.current = "main"
+        MDLabel:
+            md_bg_color: rgba(211, 211, 213, 55)
+            #md_bg_color: rgba(56, 226, 109, 20)
+            size_hint: 1, None
+            height: 50
+            pos_hint: {"center_x": .5, "top": 1}
+            text: "D e t a i l s"
+            halign: "center"
+            font_name: "BPoppins"
+            font_size: 20
+
+        # Details Section
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint: 1, None
+            height: 75
+            #md_bg_color: rgba(86, 101, 115, 20)
+            pos_hint: {"center_x": .5, "top": .914}
+            MDBoxLayout:
+                padding: 10
+                #size_hint: 1, None
+                #height: 75
+                MDBoxLayout:
+                    size_hint_x: .5
+                    orientation: "vertical"
+                    spacing: 5
+                    DetailLabel:
+                        id: name_label_detail
+                        text: 'Dogara Gani'
+                        halign: "left"
+                        font_name: "MPoppins"
+                        font_size: 12
+                        #md_bg_color: rgba(56, 226, 109, 20)
+                    DetailLabel:
+                        id: number_label_detail
+                        text: '01049919585'
+                        halign: "left"
+                        #md_bg_color: rgba(56, 226, 10, 20)
+                    DetailLabel:
+                        #md_bg_color: rgba(56, 126, 10, 20)
+                        text: 'Inputed by'
+                        halign: "left"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: 5
+                    DetailLabel:
+                        id: date_label_detail
+                        text: 'Dec 12, 2021'
+                        halign: "right"
+                        #md_bg_color: rgba(56, 26, 109, 20)
+                    DetailLabel:
+                        id: email_label_detail
+                        text: 'dogaragani@gmail.com'
+                        halign: "right"
+                        #md_bg_color: rgba(156, 26, 109, 20)
+                    DetailLabel:
+                        id: user_label_detail
+                        text: 'Dogara'
+                        halign: "right"
+                        #md_bg_color: rgba(56, 26, 209, 20)
+
+        ScrollView:
+            pos_hint: {"center_x": .5, "top": .785}
+            bar_width: 0
+            MDGridLayout:
+                rows: 10
+                padding: 10
+                spacing: 12
+                adaptive_height: True
+                #md_bg_color: rgba(169, 50, 38, 80)
+
+                # Burrowed Items Title & Menu
+                MDBoxLayout:
+                    adaptive_height: True
+                    #md_bg_color: rgba(169, 50, 38, 80)
+                    MDLabel:
+                        text: 'Borrowed Items'
+                        font_name: 'BPoppins'
+                        adaptive_height: True
+                    MDBoxLayout:
+                        pos_hint: {"right": 1, "center_y": .5}
+                        adaptive_width: True
+                        #md_bg_color: rgba(50, 169, 38, 80)
+                        MDIconButton:
+                            icon: 'plus'
+                            #adaptive_size: True
+                            user_font_size: '20sp'
+                            pos_hint: {"center_y": .5}
+                        MDIconButton:
+                            icon: 'square-edit-outline'
+                            #adaptive_size: True
+                            user_font_size: '20sp'
+                            pos_hint: {"center_y": .5}
+                        MDIconButton:
+                            icon: 'trash-can-outline'
+                            #adaptive_size: True
+                            user_font_size: '20sp'
+                            pos_hint: {"center_y": .5}
+
+                BorrowCard:
+                    orientation: 'vertical'
+                    elevation: 5
+                    radius: 3
+                    md_bg_color: rgba(255, 255, 255, 250)
+                    size_hint: 1, None
+                    adaptive_height: True
+                    pos_hint: {"center_x": .5, "top": 1}
+                    # Header
+                    MDFloatLayout:
+                        padding: 5
+                        size_hint_y: None
+                        height: 20
+                        #md_bg_color: rgba(169, 50, 38, 80)
+                        pos_hint: {"center_x": .5, "top": 1}
+                        MDLabel:
+                            text: 'Device Name'
+                            font_name: "BPoppins"
+                            font_size: 10
+                            halign: "left"
+                            adaptive_size:True
+                            pos_hint: {"x": .04, "center_y": .5}
+                            #md_bg_color: rgba(255, 170, 23, 255)
+                        MDLabel:
+                            text: 'Serial No.'
+                            font_name: "BPoppins"
+                            font_size: 10
+                            halign: "center"
+                            adaptive_size:True
+                            pos_hint: {"center_x": .685, "center_y": .5}
+                            #md_bg_color: rgba(255, 170, 23, 255)
+                        MDLabel:
+                            text: 'Status'
+                            font_name: "BPoppins"
+                            font_size: 10
+                            halign: "center"
+                            #adaptive_size:True
+                            adaptive_size:True
+                            pos_hint: {"center_x": .9, "center_y": .5}
+                            #md_bg_color: rgba(255, 170, 23, 255)
+                    MDSeparator:
+                        size_hint: .95, None
+                        height: 1
+                        pos_hint: {"center_x":.5}
+                    MDList:
+                        id: borrowed_list
+                        ItemCard:
+                            device_name: 'P20 Drone'
+                            serial_no: '761304500011'
+                        ItemCard:
+                            device_name: 'P20 Drone'
+                            serial_no: '761304500011'
+                        ItemCard:
+                        ItemCard:
+                        ItemCard:
+                            source: 'not_ok.png'
+                        ItemCard:
+                        ItemCard:
+                            source: 'not_ok.png'
+                        ItemCard:
+
+                #Notes Title & Menu
+                MDBoxLayout:
+                    adaptive_height: True
+                    #md_bg_color: rgba(169, 50, 38, 80)
+                    MDLabel:
+                        text: 'Notes'
+                        font_name: 'BPoppins'
+                        adaptive_height: True
+                    MDBoxLayout:
+                        pos_hint: {"right": 1, "center_y": .5}
+                        adaptive_width: True
+                        #md_bg_color: rgba(50, 169, 38, 80)
+                        MDIconButton:
+                            icon: 'plus'
+                            #adaptive_size: True
+                            user_font_size: '20sp'
+                            pos_hint: {"center_y": .5}
+                            on_release: root.enter_note()
+                        MDIconButton:
+                            icon: 'square-edit-outline'
+                            #adaptive_size: True
+                            user_font_size: '20sp'
+                            pos_hint: {"center_y": .5}
+                        MDIconButton:
+                            icon: 'trash-can-outline'
+                            #adaptive_size: True
+                            user_font_size: '20sp'
+                            pos_hint: {"center_y": .5}
+                NoteCard:
+                    id: note_card
+                    orientation: 'vertical'
+                    elevation: 5
+                    padding: 10
+                    radius: 3
+                    md_bg_color: rgba(255, 255, 255, 250)
+                    size_hint: 1, None
+                    adaptive_height: True
+                    MDLabel:
+                        text: 'This is a place where you can add notes pertaining \nequipment state and the likes'
+                        font_name: 'MPoppins'
+                        font_size: 10
+                        adaptive_size: True
+
+
+<LendScreen>:
+    name: 'lend'
+    on_enter: root.date_today(self)
+    MDFloatLayout:
+        orientation: 'vertical'
+        md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"top": 1}
+            on_release:
+                #root.release_cam()
+                root.manager.current = "main"
+        MDLabel:
+            md_bg_color: rgba(206, 206, 209, 20)
+            size_hint: 1, None
+            height: 50
+            pos_hint: {"center_x": .5, "top": 1}
+            text: "L e n d"
+            halign: "center"
+            font_name: "BPoppins"
+            font_size: 20
+        ScrollView:
+            pos_hint: {"center_x": .5, "top": .88}
+            #Input Section
+            MDGridLayout:
+                rows: 7
+                padding: 10
+                spacing: 12
+                adaptive_height: True
+                #md_bg_color: rgba(156, 206, 209, 70)
+                #pos_hint: {"center_x": .5, "top": .88}
+                #Name/Date Grid
+                MDGridLayout:
+                    cols: 2
+                    rows:2
+                    adaptive_height: True
+                    spacing: 12
+                    # Name/Date Labels
+                    MDLabel:
+                        text: 'Name'
+                        font_name: "MPoppins"
+                        font_size: 15
+                        md_bg_color: rgba(156, 200, 209, 70)
+                        #size_hint: .1, .1
+                    MDLabel:
+                        text: 'Date'
+                        font_name: "MPoppins"
+                        font_size: 15
+                        md_bg_color: rgba(106, 200, 209, 70)
+                    # Name Input Bar
+                    MDFloatLayout:
+                        size_hint: None, None
+                        width: 150
+                        height: 42
+                        #pos_hint: {"center_x":.5, "center_y":.5}
+                        md_bg_color: rgba(235, 235, 235, 255)
+                        radius: [10]
+                        padding: 10
+                        TextInput:
+                            id: name
+                            hint_text: "Lee"
+                            hint_text_color: rgba(206, 206,206, 255)
+                            pos_hint: {"center_x":.5, "center_y":.5}
+                            height: self.minimum_height
+                            cursor_color: rgba(206, 206,206, 255)
+                            cursor_width: "2sp"
+                            multiline: False
+                            background_color: 1,1,1,0
+                            foreground_color: rgba(71, 92, 119, 255)
+                            padding: 10
+                            font_name: "MPoppins"
+                            #on_text_validate: root.search_input(search_text.text)
+
+                    #Date Input Button
+                    ImageButton:
+                        size_hint: None, None
+                        width:125
+                        height: 42
+                        pos_hint: {"center_x":.5, "center_y":.17}
+                        md_bg_color: rgba(235, 235, 235, 255)
+                        radius: [10]
+                        padding: 10
+                        spacing: 5
+                        ripple_scale: .2
+                        on_release:
+                            root.show_date_picker()
+                            print("Working...")
+                        MDBoxLayout:
+                            size_hint: 1, 1
+                            padding: 5
+                            spacing: 5
+                            pos_hint: {"center_x":.5, "center_y":.5}
+                            #md_bg_color: rgba(92,71,119,45)
+                            MDLabel:
+                                id: date_label
+                                text: "2021-12-28"
+                                halign: 'center'
+                                font_name: 'MPoppins'
+                                font_size: "15sp"
+                                pos_hint: {"center_x":.5, "center_y":.5}
+                                color: rgba(71,92,119,245)
+                            MDIcon:
+                                icon: 'calendar-edit'
+                                pos_hint: {"center_x":.5, "center_y":.5}
+                                adaptive_size: True
+                                theme_text_color: 'Custom'
+                                text_color: rgba(71,92,119,205)
+                                font_size: "20sp"
+
+                #Phone Input
+                MDLabel:
+                    text: 'Phone Number'
+                    font_name: "MPoppins"
+                    font_size: 15
+                    md_bg_color: rgba(106, 206, 209, 70)
+                MDFloatLayout:
+                    size_hint: .5, None
+                    height: 42
+                    #pos_hint: {"center_x":.5, "center_y":.5}
+                    md_bg_color: rgba(235, 235, 235, 255)
+                    radius: [10]
+                    padding: 10
+                    TextInput:
+                        id: ph_number
+                        hint_text: "01012345678"
+                        hint_text_color: rgba(206, 206,206, 255)
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1,1,1,0
+                        foreground_color: rgba(71, 92, 119, 255)
+                        padding: 10
+                        font_name: "MPoppins"
+                        #on_text_validate: root.search_input(search_text.text)
+
+                #Email Input Label
+                MDLabel:
+                    text: 'Email'
+                    font_name: "MPoppins"
+                    font_size: 15
+                    md_bg_color: rgba(156, 206, 200, 70)
+                MDFloatLayout:
+                    size_hint: .5, None
+                    height: 42
+                    #pos_hint: {"center_x":.5, "center_y":.5}
+                    md_bg_color: rgba(235, 235, 235, 255)
+                    radius: [10]
+                    padding: 10
+                    TextInput:
+                        id: email
+                        hint_text: "name@naver.com"
+                        hint_text_color: rgba(206, 206,206, 255)
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1,1,1,0
+                        foreground_color: rgba(71, 92, 119, 255)
+                        padding: 10
+                        font_name: "MPoppins"
+                        #on_text_validate: root.search_input(search_text.text)
+
+                #Items Container
+                MDLabel:
+                    text: 'Items'
+                    font_name: "MPoppins"
+                    font_size: 15
+                    md_bg_color: rgba(156, 206, 200, 70)
+                MDFloatLayout:
+                    size_hint: .5, None
+                    height: 168
+                    #pos_hint: {"center_x":.5, "center_y":.5}
+                    md_bg_color: rgba(235, 235, 235, 255)
+                    radius: [10]
+                    padding: 10
+                    TextInput:
+                        #id: email
+                        hint_text: "name@naver.com"
+                        hint_text_color: rgba(206, 206,206, 255)
+                        pos_hint: {"center_x":.5, "center_y":.5}
+                        height: self.minimum_height
+                        cursor_color: rgba(206, 206,206, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1,1,1,0
+                        foreground_color: rgba(71, 92, 119, 255)
+                        padding: 10
+                        font_name: "MPoppins"
+                        #on_text_validate: root.search_input(search_text.text)
+
+        Button:
+            text: "Confirm"
+            size_hint: .77, .08
+            pos_hint: {"center_x": .5,"center_y": .07}
+            background_color: 0, 0, 0, 0
+            font_name: "MPoppins"
+            font_size: "18sp"
+            color: 1, 1, 1, 1
+            on_release:
+                root.manager.current = "rent_details"
+                root.add_new(name.text, date_label.text, ph_number.text, email.text)
+                #root.add_new2()
+                root.clr_txt()
+            canvas.before:
+                Color:
+                    rgb: rgba(255, 170, 23, 255)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [12]
+
+<SingleScanScreen>:
+    name: 'single_scan'
+    on_pre_enter:
+        self.scan()
+    MDFloatLayout:
+        orientation: 'vertical'
+        md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"center_y": .95}
+            on_release:
+                root.release_cam()
+                root.manager.current = "main"
+        MDLabel:
+            md_bg_color: rgba(206, 206, 209, 20)
+            size_hint: 1, None
+            height: 50
+            pos_hint: {"center_x": .5, "top": .995}
+            text: "S c a n  C o d e"
+            halign: "center"
+            font_name: "BPoppins"
+            font_size: 20
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            md_bg_color: rgba(241, 241, 243, 255)
+            size_hint: .8, .5
+            pos_hint: {"center_x": .5,"center_y": .6}
+            spacing: 15
+
+            # Camera Widget
+            MDBoxLayout:
+                id: camera
+                #md_bg_color: rgba(206, 206, 209, 255)
+                #size_hint: .77, .41
+                size_hint: 1, None
+                height: '230dp'
+                #width: '240dp'
+                pos_hint: {"center_x": .5}
+
+
+<ScanScreen>:
+    name: 'scan'
+    on_pre_enter:
+        self.scan()
+    MDFloatLayout:
+        orientation: 'vertical'
+        md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"center_y": .95}
+            on_release:
+                root.release_cam()
+                root.manager.current = "main"
+        MDLabel:
+            md_bg_color: rgba(206, 206, 209, 20)
+            size_hint: 1, None
+            height: 50
+            pos_hint: {"center_x": .5, "top": .995}
+            text: "A d d  I t e m"
+            halign: "center"
+            font_name: "BPoppins"
+            font_size: 20
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            md_bg_color: rgba(241, 241, 243, 255)
+            pos_hint: {"center_x": .5,"center_y": .4}
+            spacing: 15
+
+            # Camera Widget
+            MDBoxLayout:
+                id: cam_box
+                md_bg_color: rgba(206, 206, 209, 255)
+                #size_hint: .77, .41
+                size_hint: 1, None
+                height: '230dp'
+                #width: '240dp'
+                pos_hint: {"center_x": .5}
+
+            # Space for ListView
+            ScrollView:
+                pos_hint: {"center_x": .5}
+                size_hint: 1, .4
+                id: add_container
+                MDList:
+                    id: add_scan_list
+                    #md_bg_color: rgba(206, 206, 209, 255)
+
+        Button:
+            text: "ADD ITEMS"
+            size_hint: .77, .08
+            pos_hint: {"center_x": .5,"center_y": .07}
+            background_color: 0, 0, 0, 0
+            font_name: "MPoppins"
+            font_size: "18sp"
+            color: 1, 1, 1, 1
+            on_release:
+                root.manager.current = "lend"
+                root.release_cam()
+            canvas.before:
+                Color:
+                    rgb: rgba(255, 170, 23, 255)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [12]
+
+
+<MainScreen>:
+    root:root
+    name: 'main'
+    on_enter:
+        root.get_home_summary()
+        #root.get_product_summary()
+    ScreenManager:
+        id: screen_manager
+        transition: NoTransition()
+
+        MDScreen:
+            name: 'homepage'
+            MDBoxLayout:
+                spacing: 5
+                #md_bg_color: rgba(206, 206, 209, 255)
+                orientation: 'vertical'
+                MDBoxLayout:
+                    padding: 16
+                    spacing: 16
+                    size_hint: 1, None
+                    height: 72
+                    radius: 5
+                    md_bg_color: rgba(249, 249, 249, 80)
+
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        adaptive_size: True
+                        #md_bg_color: rgba(50, 169, 38, 80)
+                        MDLabel:
+                            id: user_name
+                            text: 'Gani Dogara'
+                            font_name: "BNanum"
+                            font_size: 14
+                            halign: "left"
+                            adaptive_size:True
+                            #pos_hint: {"x": .24, "center_y": .65}
+                            #md_bg_color: rgba(255, 170, 23, 255)
+                        MDLabel:
+                            id: serial
+                            text: 'Lead Engineer'
+                            font_name: "RNanum"
+                            font_size: 12
+                            halign: "center"
+                            adaptive_size:True
+                            #pos_hint: {"x": .24, "center_y": .4}
+                            #md_bg_color: rgba(255, 170, 23, 255)
+                    AnchorLayout:
+                        anchor_x: 'right'
+                        anchor_y: 'top'
+                        MDBoxLayout:
+                            padding: 0
+                            size_hint: None, None
+                            width: 40
+                            height: 40
+                            #md_bg_color: rgba(169, 50, 38, 80)
+                            Image:
+                                source: 'user.png'
+                                #size_hint: .85, .85
+                                adaptive_size: True
+                                pos_hint: {"center_x": .12, "center_y": .5}
+
+
+                ScrollView:
+                    size: self.size
+                    GridLayout:
+                        size_hint_y: None
+                        width: self.minimum_width
+                        height: self.minimum_height
+                        cols: 1
+                        spacing: 20
+                        padding: 15, 5
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            spacing: 5
+                            adaptive_height: True
+                            MDBoxLayout:
+                                padding: 5, 0, 5, 0
+                                adaptive_height: True
+                                #md_bg_color: rgba(255, 170, 23, 155)
+                                MDLabel:
+                                    text: 'Summary'
+                                    font_name: "BNanum" #medium
+                                    font_size: 14
+                                    halign: "left"
+                                    size_hint: 1, None
+                                    adaptive_height: True
+                                    #adaptive_size: True
+                                    #pos_hint: {"x": .01}
+                                    #md_bg_color: rgba(255, 170, 23, 255)
+                                MDTextButton:
+                                    text: 'View All >'
+                                    font_name: "BNanum"
+                                    font_size: 10
+                                    halign: "right"
+                                    adaptive_size: True
+                                    pos_hint: {"x": 1, "center_y":.5}
+                                    #md_bg_color: rgba(255, 170, 23, 255)
+                                    on_release:
+                                        root.manager.current = "product_summary"
+
+                            ImageButton:
+                                size_hint: 1, None
+                                height: 200
+                                radius: [12]
+                                md_bg_color: rgba(255, 255, 255, 255)
+                                on_release:
+                                    root.manager.current = "product_summary"
+                                GridLayout:
+                                    cols: 3
+                                    spacing: 5
+                                    padding: 10
+                                    adaptive_size: True
+                                    pos_hint: {"center_x": .5,"center_y": .5}
+                                    SummaryIcon:
+                                        id: spray
+                                        text: 'Spray Drone'
+                                        source: 'xp20.ico'
+                                    SummaryIcon:
+                                        id: xmission
+                                        text: 'Xmission'
+                                        source: 'xmission.ico'
+                                    SummaryIcon:
+                                        id: battery
+                                        text: 'Battery'
+                                        source: 'xpBattery.ico'
+                                    SummaryIcon:
+                                        id: rover
+                                        text: 'RTK Rover'
+                                        source: 'xpgen.ico'
+                                    SummaryIcon:
+                                        id: charger
+                                        text: 'Charger'
+                                        source: 'xp_charger.ico'
+                                    SummaryIcon:
+                                        id: controller
+                                        text: 'Controller'
+                                        source: 'ACB1.ico'
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            spacing: 5
+                            adaptive_height:True
+                            MDLabel:
+                                text: 'Others'
+                                font_name: "BNanum"
+                                font_size: 14
+                                halign: "left"
+                                adaptive_size:True
+                                #pos_hint: {"x": .01}
+                                #md_bg_color: rgba(255, 170, 23, 255)
+
+                            MDBoxLayout:
+                                size_hint: 1, None
+                                height: 100
+                                radius: [12]
+                                md_bg_color: rgba(255, 255, 255, 0)
+
+                                ScrollView:
+                                    do_scroll_x: True
+                                    do_scroll_y: False
+                                    GridLayout:
+                                        rows: 1
+                                        spacing: 5
+                                        padding: 0, 10, 0, 10
+                                        adaptive_size: True
+                                        pos_hint: {"center_x": .5,"center_y": .5}
+                                        HomeIcon:
+                                            text: '유심정보' # 'USIM'
+                                            source: 'sim_card.png'
+                                            on_release:
+                                                #root.manager.transition = RiseInTransition()
+                                                root.manager.current = "usim"
+                                        HomeIcon:
+                                            text: '고객' # 'Clients'
+                                            source: 'search_client.png'
+                                            on_release:
+                                                #root.manager.transition = RiseInTransition()
+                                                root.manager.current = "customer"
+                                        HomeIcon:
+                                            text: '판매' # 'Sold'
+                                            source: 'sell.png'
+                                            on_release:
+                                                #root.manager.transition = RiseInTransition()
+                                                root.manager.current = "product_summary"
+                                        HomeIcon:
+                                            text: 'Inventory'
+                                            source: 'inventory.png'
+                                            on_release:
+                                                #root.manager.transition = RiseInTransition()
+                                                root.manager.current = "product_summary"
+                Widget:
+                    size_hint: 1, None
+                    height: 50
+
+# Inventory Screen
+        MDScreen:
+            inventory_list: inventory_list
+            name: 'inventory'
+            on_enter: root.prompt_get_all_products()
+            MDBoxLayout:
+                id: screen_box
+                spacing: 5
+                #md_bg_color: rgba(206, 206, 209, 255)
+                orientation: 'vertical'
+                MDLabel:
+                    size_hint: 1, None
+                    height: 50
+                    pos_hint: {"center_x": .5, "top": .9}
+                    text: "I n v e n t o r y"
+                    halign: "center"
+                    font_name: "BPoppins"
+                    font_size: 20
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                    padding: 10, 0, 5, 0
+                    spacing: 5
+                    size_hint: 1, .1
+                    pos_hint: {"center_x":.5, "center_y":.5}
+
+                    # Search Box
+                    MDBoxLayout:
+                        size_hint: 1, None
+                        height: 42
+                        radius: 4
+                        spacing: 6
+                        padding: 12, 2, 6, 0
+                        md_bg_color: 1, 1, 1, 1
+                        #md_bg_color: rgba(235, 235, 235, 255)
+                        #pos_hint: {"center_x":.5,"center_y": .6}
+                        canvas.before:
+                            Color:
+                                rgba: rgba(71, 92, 119, 30.6)
+                            Line:
+                                width: 1
+                                rounded_rectangle: self.x, self.y, self.width, self.height, 12, 12, 12, 12, 100
+                        MDIcon:
+                            icon: 'magnify'
+                            adaptive_size: True
+                            theme_text_color: 'Custom'
+                            text_color: rgba(71,92,119,178.5)
+                            font_size: "20sp"
+                            pos_hint: {"center_x":.5,"center_y": .5}
+                            #md_bg_color: rgba(122, 222, 122, 255)
+                        TextInput:
+                            id: search
+                            hint_text: "Search"
+                            hint_text_color: rgba(206, 206,206, 255)
+                            font_name: "MPoppins"
+                            pos_hint: {"center_x":.5, "center_y":.5}
+                            height: self.minimum_height
+                            cursor_color: rgba(206, 206,206, 255)
+                            cursor_width: "2sp"
+                            multiline: False
+                            background_color: 1,1,1,0
+                            padding: 0,9
+                            foreground_color: rgba(71, 92, 119, 255)
+                            #on_text: root.prompt_get_all_products(search.text, True)
+                            #on_text: root.search(search.text, True)
+                            #on_text: root.search_by_serial(search.text)
+                            on_text_validate: root.search_by_serial(search.text)
+                            #on_text_validate: root.search(search_text.text)
+
+
+
+
+                    # Search through Scan IconButton
+                    MDIconButton:
+                        icon: 'data-matrix-scan'
+                        pos_hint: {"center_x":0.96, "center_y":.5}
+                        ripple_scale: 0
+                        theme_text_color: 'Custom'
+                        text_color: rgba(206, 206, 209, 255)
+                        on_release:
+                            root.manager.current = "single_scan"
+                            #root.qr_search()
+                            #root.search_input(search_text.text)
+
+                # Inventory List
+                ScrollView:
+                    padding:5
+                    MDList:
+                        id: inventory_list
+                        size_hint: 1, None
+                        adaptive_height: True
+
+
+                Widget:
+                    size_hint: 1, None
+                    height: 50
+
+            DGFAB:
+                size_hint: None, None
+                width: 40
+                height: 40
+                radius: 20
+                padding: 8
+                elevation: 5
+                md_bg_color: rgba(255, 255, 255, 245)
+                pos: screen_box.right - self.width -16, screen_box.y + nav_bar.height + 16
+                #pos_hint: {"right": right -16,"y": right -16}
+                #user_font_size: "27sp"
+                on_release:
+                    root.manager.current = "add_product"
+                    #app.scan()
+                MDIcon:
+                    icon: 'plus'
+
+
+
+        MDScreen:
+            name: "create"
+            MDBoxLayout:
+                spacing: 5
+                #md_bg_color: rgba(206, 206, 209, 255)
+                orientation: 'vertical'
+                MDLabel:
+                    size_hint: 1, None
+                    height: 50
+                    pos_hint: {"center_x": .5, "top": .9}
+                    text: "C r e a t e"
+                    halign: "center"
+                    font_name: "BPoppins"
+                    font_size: 20
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    padding: 10
+                    #pos_hint: {"center_x": .5,"top": .8}
+                    #md_bg_color: rgba(106, 206, 109, 255)
+                    GridLayout:
+                        cols: 2
+                        spacing: 10
+                        padding: 10
+                        pos_hint: {"center_x": .5,"center_y": .5}
+                        MDFloatLayout:
+                            CreateButton:
+                                text: 'Product'
+                                source: 'new_product.png'
+                                on_release:
+                                    root.manager.current = "add_product"
+                        MDFloatLayout:
+                            CreateButton:
+                                text: 'Client'
+                                source: 'add_user.png'
+                                on_release:
+                                    root.manager.current = "add_customer"
+                        MDFloatLayout:
+                            CreateButton:
+                                text: 'USIM'
+                                source: 'sim_card.png'
+                                on_release:
+                                    root.manager.current = "add_usim"
+                        MDFloatLayout:
+                            CreateButton:
+                                text: 'QR Code'
+                                source: 'qr_code1.png'
+                                on_release:
+                                    root.manager.current = "product_summary"
+                Widget:
+                    size_hint: 1, None
+                    height: 50
+
+        MDScreen:
+            name: 'borrow'
+            MDBoxLayout:
+                id: borrow_screen_box
+                spacing: 5
+                #md_bg_color: rgba(206, 206, 209, 255)
+                orientation: 'vertical'
+                MDLabel:
+                    #md_bg_color: rgba(211, 211, 213, 55)
+                    size_hint: 1, None
+                    height: 50
+                    pos_hint: {"center_x": .5, "top": .9}
+                    text: "R e n t a l"
+                    halign: "center"
+                    font_name: "BPoppins"
+                    font_size: 20
+                MDBoxLayout:
+                    padding: 10, 0, 5, 0
+                    spacing: 5
+                    size_hint: 1, None
+                    adaptive_height: True
+                    pos_hint: {"center_x":.5, "center_y":.5}
+
+                    # Search Box
+                    MDBoxLayout:
+                        size_hint: 9, None
+                        height: 42
+                        radius: 4
+                        spacing: 6
+                        padding: 12, 2, 6, 0
+                        md_bg_color: 1, 1, 1, 1
+                        #md_bg_color: rgba(235, 235, 235, 255)
+                        #pos_hint: {"center_x":.5,"center_y": .6}
+                        canvas.before:
+                            Color:
+                                rgba: rgba(71, 92, 119, 30.6)
+                            Line:
+                                width: 1
+                                rounded_rectangle: self.x, self.y, self.width, self.height, 12, 12, 12, 12, 100
+                        MDIcon:
+                            icon: 'magnify'
+                            adaptive_size: True
+                            theme_text_color: 'Custom'
+                            text_color: rgba(71,92,119,178.5)
+                            font_size: "20sp"
+                            pos_hint: {"center_x":.5,"center_y": .5}
+                            #md_bg_color: rgba(122, 222, 122, 255)
+                        TextInput:
+                            id: search_text
+                            hint_text: "Search"
+                            hint_text_color: rgba(206, 206,206, 255)
+                            font_name: "MPoppins"
+                            pos_hint: {"center_x":.5, "center_y":.5}
+                            height: self.minimum_height
+                            cursor_color: rgba(206, 206,206, 255)
+                            cursor_width: "2sp"
+                            multiline: False
+                            background_color: 1,1,1,0
+                            padding: 0,9
+                            foreground_color: rgba(71, 92, 119, 255)
+                            #on_text: root.prompt_get_all_products(search_text.text, True)
+                            #on_text_validate: root.search(search_text.text)
+
+
+
+                    # Search through Scan IconButton
+                    MDIconButton:
+                        icon: 'data-matrix-scan'
+                        pos_hint: {"center_x":5, "center_y":.5}
+                        ripple_scale: 0
+                        theme_text_color: 'Custom'
+                        text_color: rgba(206, 206, 209, 255)
+                        adaptive_size: True
+                        #on_release: root.search_input(search_text.text)
+
+                # Borrow List
+                ScrollView:
+                    padding:40
+                    MDList:
+                        id: rentals_list
+                        size_hint: 1, None
+                        adaptive_height: True
+                        #md_bg_color: rgba(206, 206, 209, 255)
+                        CustomerCard:
+                        CustomerCard:
+                        CustomerCard:
+                        CustomerCard:
+
+                Widget:
+                    size_hint: 1, None
+                    height: 50
+
+            DGFAB:
+                size_hint: None, None
+                width: 40
+                height: 40
+                radius: 20
+                padding: 8
+                elevation: 5
+                md_bg_color: rgba(255, 255, 255, 245)
+                pos: borrow_screen_box.right - self.width -16, borrow_screen_box.y + nav_bar.height + 16
+                on_release:
+                    root.manager.current = "new_rental"
+                MDIcon:
+                    icon: 'plus'
+
+
+        MDScreen:
+            name: "account"
+            MDBoxLayout:
+                orientation: 'vertical'
+                padding: 20
+                spacing: 20
+                #md_bg_color: rgba(106, 206, 209, 55)
+                MDBoxLayout:
+                    size_hint: None, None
+                    width: 100
+                    height: 100
+                    radius: 50
+                    pos_hint: {"center_x":.5, "top":.5}
+                    md_bg_color: rgba(225, 225, 225, 125)
+                    Image:
+                        source: 'profile.png'
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint: 1, None
+                    adaptive_height: True
+                    #md_bg_color: rgba(106, 106, 109, 55)
+
+                    MDLabel:
+                        id: username
+                        text: 'Gani Dogara'
+                        font_name: "MPoppins"
+                        font_size: 14
+                        halign: "center"
+                        adaptive_height: True
+
+                    MDLabel:
+                        id: position
+                        text: 'Lead Engineer'
+                        font_name: "LPoppins"
+                        font_size: 12
+                        halign: "center"
+                        adaptive_height: True
+                MDBoxLayout:
+                    adaptive_height: True
+                    padding: 10, 0, 10, 0
+                    MDSeparator:
+
+                MDCard:
+                    radius: 12
+                    padding: 0, 10, 0, 20
+                    size_hint: 1, None
+                    height: self.minimum_height
+                    pos_hint: {"center_x":.5, "center_y":.5}
+                    MDList:
+                        adaptive_height: True
+                        AccountListItem:
+                            id: password
+                            source: 'password.png'
+                            text: 'Change Password'
+                        AccountListItem:
+                            id: ph_no
+                            source: 'phone.png'
+                            text: '01012345678'
+                        AccountListItem:
+                            id: email
+                            source: 'mail.png'
+                            text: 'dogara@toppfield.com'
+                        AccountListItem:
+                            id: logout
+                            source: 'logout.png'
+                            text: 'Logout'
+                Widget:
+                    size_hint: 1, None
+                    height: 45
+
+
+
+    NavBar:
+        id: nav_bar
+        size_hint: 1, None
+        height: 56
+        pos_hint: {"center_x": .5, "y": 0}
+        elevation: 10
+        md_bg_color: 1, 1, 1, 1
+        MDGridLayout
+            cols: 5
+            size_hint_x: 1
+            spacing: 10
+            pos_hint: {"center_x": .5 , "center_y": .5}
+            #md_bg_color: rgba(71,92,119,255)
+            NavIconButton:
+                id: nav_icon1
+                text: "Home"
+                icon: "home"
+                text_color: rgba(71,92,119,255)
+                on_release:
+                    screen_manager.current = "homepage"
+                    root.change_color(self)
+            NavIconButton:
+                id: nav_icon2
+                text: "Inventory"
+                icon: "package"
+                text_color: rgba(222, 222, 222, 255)
+                on_release:
+                    screen_manager.current = "inventory"
+                    root.change_color(self)
+            NavIconButton:
+                id: nav_icon3
+                text: "Create"
+                icon: "plus-circle"
+                text_color: rgba(222, 222, 222, 255)
+                on_release:
+                    screen_manager.current = "create"
+                    root.change_color(self)
+            NavIconButton:
+                id: nav_icon4
+                text: "Rental"
+                icon: "key"
+                text_color: rgba(222, 222, 222, 255)
+                on_release:
+                    screen_manager.current = "borrow"
+                    root.change_color(self)
+            NavIconButton:
+                id: nav_icon5
+                text: "Account"
+                icon: "account"
+                text_color: rgba(222, 222, 222, 255)
+                on_release:
+                    screen_manager.current = "account"
+                    root.change_color(self)
+
+# Add Customer Bottom Sheet
+<AddCustomerBS@BoxLayout>:
+    orientation: "vertical"
+    size_hint_y: None
+    height: "400dp"
+    MDFloatLayout:
+        #md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'close'
+            pos_hint: {"right":1, "top":1}
+            on_release:
+                #root.release_cam()
+                root.manager.current = "main"
+        MDLabel:
+            md_bg_color: rgba(206, 206, 209, 20)
+            size_hint: 1, None
+            height: 50
+            pos_hint: {"center_x": .5, "top": 1}
+            text: "A d d  C u s t o m e r"
+            halign: "center"
+            font_name: "LPoppins"
+            font_size: 20
+        ScrollView:
+            pos_hint: {"center_x": .5}
+            size_hint: 1, None
+            height: 240
+            MDGridLayout:
+                rows: 4
+                padding: 16
+                spacing: 25
+                adaptive_height: True
+                pos_hint: {"center_x": .5,"top": .9}
+                DGTextField:
+                    title: 'Organization Name'
+                    hint_text: 'ToppField'
+                DGTextField:
+                    title: 'Staff Name'
+                    hint_text: 'Dogara'
+                DGTextField:
+                    title: 'Phone Number'
+                    hint_text: '01012345678'
+                DGTextField:
+                    title: 'Email'
+                    hint_text: 'staff@company.com'
+
+        MDBoxLayout:
+            adaptive_height: True
+            padding:16
+            pos_hint: {"center_x": .5,"y": 0}
+            #md_bg_color: rgba(122, 222, 122, 255)
+            Button:
+                text: "Next"
+                size_hint: .9, None
+                height: 42
+                #pos_hint: {"center_x": .5,"center_y": .08}
+                background_color: 0, 0, 0, 0
+                font_name: "MPoppins"
+                font_size: "18sp"
+                color: 1, 1, 1, 1
+                widget_style: "ios"
+                on_release:
+                    #root.manager.current = "product_details"
+                    #root.add_new_product(serial.text, name.text, year.text, version.text, category.text, entry_date.text, owner.text, user.text, status.text)
+                    #root.clr_txt()
+                    #root.show_details()
+                canvas.before:
+                    Color:
+                        rgb: rgba(71,92,119,205)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [4]
+
+<AddCustomerDialog>:
+    orientation: "vertical"
+    size_hint_y: None
+    height: "290dp"
+    spacing: 5
+    #md_bg_color: rgba(122, 222, 122, 255)
+    MDLabel:
+        size_hint: 1, None
+        height: 50
+        color: rgba(35, 47, 52, 255)
+        pos_hint: {"center_x": .5, "enter_y": 1}
+        text: "새 고객 추가"
+        halign: "left"
+        font_name: 'RNanum'
+        font_size: 21
+    MDGridLayout:
+        rows: 4
+        padding: 0, 0, 0, 5
+        spacing: 10
+        adaptive_height: True
+        pos_hint: {"center_x": .5,"top": .9}
+        DGTextField:
+            id: org_name
+            title: '화사명'
+            hint_text: root.org_name
+        DGTextField:
+            id: staff_name
+            title: '성함'
+            hint_text: root.staff_name
+        DGTextField:
+            id: phone_no
+            title: '전화 번호'
+            hint_text: root.phone_no
+        DGTextField:
+            id: email
+            title: '이메일'
+            hint_text: root.email

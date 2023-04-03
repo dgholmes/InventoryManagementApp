@@ -1,0 +1,41 @@
+MDScreen:
+    name: "scan"
+    MDFloatLayout:
+        orientation: 'vertical'
+        md_bg_color: rgba(241, 241, 243, 255)
+        MDIconButton:
+            icon: 'chevron-left'
+            pos_hint: {"center_y": .95 }
+        MDBoxLayout:
+            orientation: 'vertical'
+            md_bg_color: rgba(241, 241, 243, 255)
+            pos_hint: {"center_x": .5,"center_y": .4}
+            spacing: 15
+            CamBox:
+                id: cam_box
+                md_bg_color: rgba(206, 206, 209, 255)
+                #size_hint: .77, .41
+                size_hint: None, None
+                height: '240dp'
+                width: '240dp'
+                pos_hint: {"center_x": .5}
+            MDBoxLayout:
+                pos_hint: {"center_x": .5}
+                md_bg_color: rgba(106, 206, 209, 255)
+                size_hint: 1, .4
+        Button:
+            text: "ADD ITEMS"
+            size_hint: .77, .08
+            pos_hint: {"center_x": .5,"center_y": .07}
+            background_color: 0, 0, 0, 0
+            font_name: "MPoppins"
+            font_size: "18sp"
+            color: 1, 1, 1, 1
+
+            canvas.before:
+                Color:
+                    rgb: rgba(255, 170, 23, 255)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [12]
